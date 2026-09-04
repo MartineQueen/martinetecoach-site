@@ -1,0 +1,1604 @@
+/* ==========================================================================
+   Martine prend sa place — Design system
+   Tokens extraits directement de la maquette Figma (get_design_context)
+   Polices Gazpacho / Graphik = polices payantes de la maquette, non disponibles
+   en web font libre. Fallbacks posés ci-dessous, à remplacer si tu as les
+   fichiers de police ou un kit Adobe Fonts / Fontshare.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Gazpacho';
+  src: url('fonts/GazpachoBlack.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --violet-dark: #2f326a;
+  --violet-primary: #6066d8;
+  --violet-lilas: #dadaff;
+  --violet-lilas-light: #ececff;
+  --cream: #fffbf9;
+  --peach: #ffeee2;
+  --charbon: #3a3748;
+  /* Assombri par rapport à la maquette (#9395ae) : la version claire ne passait
+     pas le contraste minimum (2.6:1 à 2.9:1 selon le fond, il faut 4.5:1) sur
+     texte secondaire (sous-titre hero, mentions offres, etc.). */
+  --gris-clair: #686b82;
+  /* Même rôle que gris-clair (texte secondaire discret) mais pour les fonds
+     sombres (footer) : sur charbon, gris-clair passerait sous la barre. */
+  --gris-clair-sur-fonce: #a4a6bd;
+  --lime: #dbff73;
+  --coral: #f4b4b2;
+  --white: #ffffff;
+
+  --gradient-cta: linear-gradient(140deg, var(--coral) 28%, var(--violet-primary) 100%);
+
+  /* Gazpacho : vraie police (fichier fourni par Marine, un seul cut Black -> weight 400 ici, déjà graisse max).
+     Graphik (sans, premium, non fournie) -> Inter en remplacement définitif. */
+  --font-display: 'Gazpacho', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, sans-serif;
+
+  --radius-card: 20px;
+  --radius-lg: 24px;
+  --radius-sm: 12px;
+  --container-width: 1280px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--charbon);
+  background: var(--cream);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400; /* Gazpacho Black n'a qu'une seule graisse (déjà très grasse) */
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  color: var(--violet-dark);
+}
+
+h1 { font-size: clamp(2.6rem, 5vw, 4.5rem); line-height: 1.05; }
+h2.section-title { font-size: clamp(1.8rem, 3.2vw, 2.75rem); text-align: center; }
+h3 { font-size: clamp(1.2rem, 2vw, 1.35rem); }
+
+p { margin: 0 0 1em; }
+a { color: inherit; text-decoration: none; }
+
+/* Navigation clavier : anneau de focus visible et sur-mesure (au lieu du
+   contour par défaut du navigateur, moins lisible sur les fonds colorés).
+   :focus-visible ne se déclenche qu'au clavier, jamais au clic souris/tactile. */
+a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--violet-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+.section { padding: 100px 0; }
+.section-intro { text-align: center; max-width: 700px; margin: 0 auto 2.5em; font-size: 17px; color: var(--violet-dark); }
+/* Sur Figma ce texte s'étale sur (presque) toute la largeur de la section, pas 700px : d'où le <br> qui tient sur 2 lignes seulement si le conteneur est assez large. */
+.section-offres .section-intro { max-width: none; }
+
+/* -------------------- Buttons --------------------
+   Tailles et graisses reprises exactement des boutons Figma (get_design_context
+   sur chaque instance : nav CTA, hero CTA, CTA cartes offres, CTA final, teaser). */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 6px 16px -8px rgba(46,48,107,0.18);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+.btn-primary {
+  background-image: var(--gradient-cta);
+  color: #fff;
+}
+.btn-primary:hover { transform: translateY(-4px); box-shadow: 0 12px 20px -10px rgba(96,102,216,0.4); }
+.btn-outline { background: transparent; border: 2px solid var(--violet-dark); color: var(--violet-dark); }
+.btn-outline:hover { background: var(--violet-dark); color: #fff; transform: translateY(-4px); box-shadow: 0 14px 26px -10px rgba(46,48,107,0.3); }
+.btn-white { background: #fff; color: var(--violet-dark); }
+.btn-white:hover { background: var(--lime); transform: translateY(-4px); box-shadow: 0 18px 30px -10px rgba(0,0,0,0.3); }
+.btn-solid { background: var(--violet-primary); color: #fff; font-weight: 500; }
+.btn-solid:hover { transform: translateY(-4px); box-shadow: 0 12px 20px -10px rgba(96,102,216,0.4); }
+/* Nav / petit bouton : plus compact que les CTA hero/final, pour rester proportionné dans le header */
+.btn-sm { padding: 10px 20px; font-size: 14px; }
+/* Hero, teaser, CTA final : padding 16/32, 16px */
+.btn-lg { padding: 16px 32px; font-size: 16px; }
+/* CTA compact dans les cartes offres : padding 12/24, 13px, pleine largeur */
+.btn-card { padding: 12px 24px; font-size: 14px; width: 100%; justify-content: center; text-align: center; }
+
+.cta-microcopy { font-size: 14px; color: var(--violet-dark); max-width: 420px; margin-top: 12px; }
+
+/* -------------------- Header -------------------- */
+.launch-banner {
+  background: var(--violet-dark);
+}
+.launch-banner-inner {
+  display: flex; align-items: center; justify-content: center;
+  gap: 14px; flex-wrap: wrap; text-align: center;
+  padding: 8px 24px; font-size: 12px; color: var(--white); font-weight: 500;
+}
+.launch-banner-inner strong { color: var(--lime); font-weight: 700; }
+.launch-banner-inner .price-old { text-decoration: line-through; opacity: 0.6; }
+.launch-banner-link {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center;
+  background: var(--violet-lilas);
+  color: var(--violet-dark); font-weight: 700; font-size: 12px; white-space: nowrap;
+  padding: 5px 14px; border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+.launch-banner-link:hover { background: var(--white); }
+
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255, 251, 249, 0.72);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  height: 72px;
+  display: flex; align-items: center;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.site-header.is-scrolled { border-bottom-color: var(--violet-lilas); box-shadow: 0 4px 20px -8px rgba(46,48,107,0.1); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.logo { font-family: var(--font-display); font-size: 22px; color: var(--violet-dark); }
+.logo .logo-accent { color: var(--violet-primary); }
+.main-nav { display: flex; gap: 32px; align-items: center; }
+.nav-link { font-weight: 500; font-size: 16px; color: var(--violet-dark); transition: color 0.2s ease; }
+.nav-link:hover { color: var(--violet-primary); }
+/* Pas de changement de graisse ici : le texte en gras est plus large que le
+   texte normal, ce qui décalait légèrement le menu d'une page à l'autre
+   (le lien actif n'est pas le même sur chaque page). Seule la couleur change. */
+.nav-link.is-active { color: var(--violet-primary); }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+
+/* Bouton hamburger : caché sur desktop, seul le menu mobile s'en sert */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px; height: 40px;
+  background: none; border: none; cursor: pointer;
+  padding: 0; flex-shrink: 0;
+}
+.nav-toggle span {
+  display: block;
+  width: 22px; height: 2px;
+  background: var(--violet-dark);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.nav-toggle.is-active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.is-active span:nth-child(2) { opacity: 0; }
+.nav-toggle.is-active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* CTA du header : caché dans le menu mobile (voir @media 1000px), il est
+   dupliqué dans .mobile-menu pour rester accessible sans encombrer la ligne
+   logo + hamburger. */
+.nav-cta-mobile { display: none; }
+
+/* Tiroir mobile : rendu EN DEHORS du <header> dans le DOM (voir HTML) et pas
+   dedans, exprès. Le header a un backdrop-filter (effet verre dépoli), et
+   Safari traite tout ancêtre avec backdrop-filter comme "containing block"
+   pour ses descendants en position:fixed — un position:fixed imbriqué dans
+   le header se retrouvait donc coincé dans la hauteur du header au lieu de
+   couvrir tout l'écran. D'où .mobile-menu comme frère du header, pas enfant. */
+.mobile-menu { display: none; }
+
+/* Barre de CTA fixe en bas, mobile uniquement : le CTA principal reste
+   toujours accessible sans avoir à ouvrir le menu ou remonter en haut. */
+.mobile-sticky-cta { display: none; }
+
+/* -------------------- Bannière de consentement cookies (Google Analytics) --------------------
+   Petite carte flottante en bas de l'écran, cachée par défaut via l'attribut
+   [hidden] (le JS ne l'affiche que si aucun choix n'a encore été mémorisé). Pas
+   de voile bloquant derrière : la bannière reste visible sans empêcher de
+   naviguer, pour ne pas casser l'effet du hero à l'arrivée sur le site. */
+.cookie-banner {
+  position: fixed;
+  right: 20px; bottom: 20px;
+  z-index: 300;
+  max-width: 360px;
+  background: var(--violet-lilas-light);
+  border: 1px solid var(--violet-lilas);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 24px 48px -14px rgba(46,48,107,0.32);
+  animation: cookie-banner-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes cookie-banner-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.cookie-banner[hidden] { display: none; }
+.cookie-banner-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.cookie-banner-header strong { font-size: 15px; font-weight: 700; color: var(--violet-dark); }
+.cookie-banner-icon {
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--lime);
+  font-size: 16px;
+  box-shadow: 0 6px 14px -4px rgba(219,255,115,0.7);
+}
+.cookie-banner p { margin: 0 0 18px; font-size: 14px; color: var(--violet-dark); line-height: 1.5; }
+.cookie-banner-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.cookie-banner-actions .btn-outline { background: var(--white); border-color: var(--violet-lilas); }
+.cookie-banner-actions .btn-outline:hover { border-color: var(--violet-dark); background: var(--white); color: var(--violet-dark); }
+.cookie-banner-actions .btn-primary { background-image: none; background: var(--violet-dark); }
+.cookie-banner-actions .btn-primary:hover { background: var(--violet-dark); opacity: 0.9; }
+@media (max-width: 1000px) {
+  .cookie-banner { left: 12px; right: 12px; bottom: 12px; max-width: none; padding: 18px 20px; border-radius: 20px; }
+  /* Sur les pages avec CTA sticky, la bannière doit flotter au-dessus, pas dessous. */
+  .has-sticky-cta .cookie-banner { bottom: 92px; }
+  .cookie-banner-actions { flex-wrap: wrap; }
+  .cookie-banner-actions .btn { flex: 1; }
+}
+
+/* Voile sombre derrière le tiroir mobile, caché par défaut (n'existe visuellement
+   que quand le hamburger est ouvert, sur mobile). */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(47, 50, 106, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 190;
+}
+.nav-overlay.is-visible { opacity: 1; pointer-events: auto; }
+
+/* -------------------- Hero -------------------- */
+.hero {
+  background: var(--cream);
+  min-height: 700px;
+  display: flex; align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 56px 0;
+}
+.hero::before, .hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(2px);
+  opacity: 0.35;
+  z-index: 0;
+}
+.hero::before { width: 420px; height: 420px; right: -120px; top: -120px; background: radial-gradient(circle, var(--coral), transparent 70%); }
+.hero::after { width: 360px; height: 360px; left: -180px; bottom: -180px; background: radial-gradient(circle, var(--violet-lilas), transparent 70%); }
+.hero-inner { display: flex; gap: 56px; align-items: center; position: relative; z-index: 1; width: 100%; }
+.hero-text { flex: 1; display: flex; flex-direction: column; gap: 14px; align-items: flex-start; max-width: 520px; }
+.split-line { display: block; }
+.hero-text h1 .line-2 { color: var(--violet-primary); margin-top: 0.15em; }
+.hero-subtitle { font-size: 17px; color: var(--violet-dark); }
+.hero-subtitle strong { color: var(--violet-dark); font-weight: 500; }
+.hero-tagline { font-size: 17px; color: var(--violet-dark); font-weight: 600; margin-top: -16px; }
+
+.hero-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; width: 100%; }
+.social-proof {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--violet-lilas-light);
+  padding: 10px 16px; border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 500; color: var(--violet-dark);
+  line-height: 1.4;
+  white-space: nowrap;
+  box-shadow: 0 6px 14px -6px rgba(46,48,107,0.12);
+}
+.social-proof .dot {
+  display: inline-flex;
+  width: 14px; height: 14px;
+  flex-shrink: 0;
+  animation: heart-beat 1.6s ease-in-out infinite;
+  transform-origin: center;
+}
+.social-proof .dot svg { width: 100%; height: 100%; fill: var(--violet-primary); }
+@keyframes heart-beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+.hero-clarif { font-size: 14px; color: var(--violet-dark); font-style: italic; }
+
+/* Comme sur Figma : le badge flotte au-dessus du titre, en haut à droite,
+   pas en bas de la pile de CTA. */
+.headline-block { position: relative; margin-top: 24px; }
+.scarcity-badge {
+  /* Sticker qui mange légèrement sur le "?" de la 2e ligne, en haut à droite
+     du titre : effet graphique volontaire, sans recouvrir de mot entier. */
+  /* En haut à gauche du bloc titre, entièrement au-dessus du texte : pas de
+     risque de chevauchement avec le sous-titre, quelle que soit la largeur
+     d'écran. */
+  position: absolute;
+  top: -24px;
+  left: -24px;
+  right: auto;
+  bottom: auto;
+  transform: rotate(-6deg);
+  background: var(--lime);
+  border: 2px solid var(--lime);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 600; font-size: 14px; color: var(--violet-dark);
+  white-space: nowrap;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  z-index: 2;
+}
+/* Le badge apparaît après le titre (mots qui claquent), pas en même temps :
+   delay calé juste après la fin du stagger GSAP sur les mots du h1. */
+.js-anim .scarcity-badge {
+  opacity: 0;
+  animation: badge-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 1s forwards;
+}
+@keyframes badge-pop {
+  from { opacity: 0; transform: rotate(-6deg) scale(0.5); }
+  to { opacity: 1; transform: rotate(-6deg) scale(1); }
+}
+
+.hero-image-wrap { flex: 1; display: flex; justify-content: center; position: relative; max-width: 580px; }
+.hero-photo-mask {
+  width: 100%;
+  max-width: 640px;
+  position: relative;
+}
+/* Visuel final fourni par Marine (export Figma) : arche, rotation et détourage
+   déjà intégrés dans le fichier. On l'affiche tel quel, sans retraitement CSS. */
+.hero-photo-mask img { width: 100%; height: auto; display: block; }
+.floating-tag {
+  position: absolute; left: -20px; top: 60%;
+  transform: rotate(-4.16deg);
+  background: rgba(236, 236, 255, 0.55);
+  backdrop-filter: blur(8px) saturate(160%);
+  -webkit-backdrop-filter: blur(8px) saturate(160%);
+  border: 1.5px solid rgba(96,102,216,0.35);
+  padding: 10px 16px; border-radius: 999px;
+  font-weight: 600; font-size: 14px; color: var(--violet-dark);
+  box-shadow: 0 14px 22px -4px rgba(0,0,0,0.28);
+  animation: float-tag 5.6s ease-in-out infinite;
+  animation-delay: 0.4s;
+}
+.floating-accent {
+  position: absolute; right: 18%; top: 18%;
+  transform: rotate(12deg);
+  width: 44px; height: 44px;
+  background: var(--lime);
+  border-radius: 22px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 14px 22px -4px rgba(0,0,0,0.28);
+  animation: float-accent 3.1s ease-in-out infinite;
+  animation-delay: 1.7s;
+}
+
+@keyframes float-tag {
+  0%, 100% { transform: rotate(-4.16deg) translateY(0); }
+  50% { transform: rotate(-6deg) translateY(-16px); }
+}
+@keyframes float-accent {
+  0%, 100% { transform: rotate(12deg) translateY(0); }
+  50% { transform: rotate(16deg) translateY(-10px); }
+}
+@keyframes float-badge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+
+/* -------------------- Ça te parle -------------------- */
+.section-parle { background: var(--cream); }
+.parle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 2.5em 0; }
+.parle-card {
+  background: var(--white);
+  border: 1px solid var(--violet-lilas);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  box-shadow: 0 16px 32px -12px rgba(46,48,107,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.parle-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 40px -14px rgba(96,102,216,0.24), 0 4px 12px rgba(46,48,107,0.08);
+  border-color: var(--violet-primary);
+}
+.parle-card-icon {
+  width: 40px; height: 40px;
+  background: var(--violet-lilas-light);
+  border: 2px solid var(--violet-primary);
+  border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 10px rgba(0,0,0,0.08);
+}
+.parle-card h3 { font-size: 22px; margin-bottom: 12px; }
+.parle-card p { font-size: 14px; color: var(--violet-dark); }
+.parle-closing { text-align: center; font-size: 16px; max-width: 700px; margin: 0 auto; color: var(--violet-dark); }
+
+/* -------------------- Qui suis-je -------------------- */
+.section-qui { background: var(--peach); }
+.qui-split { display: flex; gap: 64px; align-items: center; margin-bottom: 28px; }
+.qui-photo-wrap { position: relative; flex-shrink: 0; }
+.qui-photo {
+  width: 560px;
+}
+/* La photo a ses coins arrondis intégrés (PNG à fond transparent), mais pas
+   assez d'ombre visible sur le fond peach : drop-shadow (pas box-shadow, qui
+   dessinerait un rectangle autour des coins transparents) pour épouser la
+   silhouette réelle de l'image. */
+.qui-photo img { width: 100%; height: auto; display: block; filter: drop-shadow(0 24px 32px rgba(46,48,107,0.18)); }
+.qui-photo-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--violet-primary); text-align: center; padding: 24px; font-size: 14px;
+}
+.editorial-badge {
+  /* Coordonnées Figma : x=-28, y=420 sur un bloc photo de 560x597.7 -> top=70.3% */
+  position: absolute; left: -28px; top: 70.3%;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.5);
+  padding: 10px 14px; border-radius: 999px;
+  font-size: 12px;
+  box-shadow: 0 12px 12px rgba(0,0,0,0.07);
+  animation: float-badge 4.2s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+.qui-copy { flex: 1; }
+.section-eyebrow { font-size: 14px; font-weight: 700; color: var(--violet-primary); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 8px; }
+.qui-copy h2 { font-size: clamp(2rem, 3.5vw, 3.2rem); text-align: left; }
+.qui-copy p { font-size: 17px; color: var(--violet-dark); }
+
+.resultats-intro { text-align: center; font-size: 17px; max-width: 780px; margin: 0 auto 40px; color: var(--violet-dark); }
+
+.proof-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
+.proof-card {
+  background: var(--white);
+  border: 1px solid var(--violet-lilas);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  box-shadow: 0 8px 12px rgba(46,48,107,0.08);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.proof-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 40px -14px rgba(96,102,216,0.24), 0 4px 12px rgba(46,48,107,0.08);
+  border-color: var(--violet-primary);
+}
+.proof-card.is-instagram { background: var(--violet-lilas-light); border-color: var(--violet-lilas); }
+.proof-card.is-instagram:hover { border-color: var(--violet-primary); }
+.proof-card h3 { font-size: 32px; margin-bottom: 16px; white-space: nowrap; }
+.proof-subtitle { font-weight: 600; font-size: 14px; color: var(--violet-dark); }
+.proof-card p.proof-body { font-size: 14px; color: var(--violet-dark); }
+.proof-stats-row { display: flex; gap: 16px; margin: 24px 0; }
+.proof-highlight { flex: 1; padding: 4px 0; display: flex; flex-direction: column; justify-content: flex-start; min-width: 0; }
+.proof-highlight:not(:last-child) { padding-right: 20px; }
+.proof-highlight:not(:first-child) { padding-left: 20px; }
+.proof-highlight .proof-stat-label { margin-bottom: 8px; }
+.proof-stats-stack { display: flex; flex-direction: column; margin: 24px 0; flex-grow: 1; justify-content: space-evenly; }
+.proof-stats-stack > div { padding: 22px 4px; border-bottom: 1px solid rgba(96,102,216,0.18); }
+.proof-stats-stack > div:last-child { border-bottom: none; }
+.proof-card .proof-cta { align-self: flex-start; }
+.proof-stat-value { font-family: var(--font-display); font-size: 32px; line-height: 1; color: var(--violet-primary); display: block; margin-bottom: 6px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.proof-rating-count { display: block; margin-top: 8px; }
+.proof-rating-count-num { display: block; font-weight: 700; font-size: 14px; color: var(--violet-dark); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.proof-rating-count-sub { display: block; font-weight: 500; font-size: 12px; color: var(--violet-dark); margin-top: 2px; }
+.proof-rating-line { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.proof-rating-line .proof-stat-value { margin-bottom: 0; min-width: 4.5ch; }
+.proof-rating-stars { display: flex; align-items: center; gap: 2px; position: relative; width: fit-content; }
+.proof-rating-stars::before {
+  content: '';
+  position: absolute; left: -8px; right: -8px; top: -8px; bottom: -8px;
+  background: radial-gradient(ellipse at center, rgba(219,255,115,0.4), transparent 72%);
+  filter: blur(5px);
+  z-index: 0;
+}
+.proof-rating-stars .star {
+  position: relative; z-index: 1;
+  width: 19px; height: 19px;
+  fill: var(--lime);
+  stroke: var(--violet-primary);
+  stroke-width: 1.3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.proof-stats-stack .proof-stat-value { font-size: 36px; white-space: normal; }
+.proof-stat-label { display: block; font-size: 12px; font-weight: 700; color: var(--violet-dark); text-transform: uppercase; letter-spacing: 0.03em; opacity: 0.75; }
+.logos-banner {
+  border-top: 1px solid var(--violet-lilas);
+  padding-top: 24px; margin-bottom: 24px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+.logos-track {
+  display: flex; align-items: center; gap: 56px;
+  width: max-content;
+  animation: logos-scroll 28s linear infinite;
+}
+.logos-banner:hover .logos-track { animation-play-state: paused; }
+.logos-track img {
+  height: 28px; width: auto; display: block;
+  filter: grayscale(100%);
+  opacity: 0.55;
+  transition: opacity 0.25s ease;
+}
+.logos-track a:hover img { opacity: 0.9; }
+@keyframes logos-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.comments-title { font-family: var(--font-display); font-size: 22px; margin-bottom: 16px; color: var(--violet-dark); }
+/* Slider horizontal (scroll-snap natif, pas de JS) : les cards dépassent la largeur
+   de la colonne, ce qui permet d'en montrer plus sans les tasser en grille 3 colonnes.
+   Scrollbar native masquée + fondu sur le bord droit pour indiquer qu'on peut scroller,
+   à la place d'une barre de scroll visible. */
+.comments-grid-wrap { position: relative; margin: 0 0 24px; }
+.comments-grid-wrap::after {
+  content: '';
+  position: absolute; top: 0; right: 0; bottom: 20px; width: 40px;
+  background: linear-gradient(to right, rgba(255,255,255,0), var(--white));
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+.comments-grid-wrap.is-end::after { opacity: 0; }
+.comments-grid-wrap::before {
+  content: '';
+  position: absolute; top: 0; left: 0; bottom: 20px; width: 40px;
+  background: linear-gradient(to left, rgba(255,255,255,0), var(--white));
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 1;
+}
+.comments-grid-wrap.is-scrolled::before { opacity: 1; }
+.comments-grid {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 4px 20px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.comments-grid::-webkit-scrollbar { display: none; }
+.comment-card {
+  flex: 0 0 260px;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: start;
+  background: var(--white); border: 1px solid var(--violet-lilas);
+  border-radius: 16px; padding: 20px;
+  box-shadow: 0 8px 12px rgba(46,48,107,0.08);
+  font-size: 14px;
+  box-sizing: border-box;
+}
+.comment-card p { margin: 0; color: var(--violet-dark); }
+.comment-card .comment-stars {
+  display: flex; align-items: center; gap: 2px;
+  margin-bottom: 12px; flex-shrink: 0;
+  position: relative; width: fit-content;
+}
+.comment-card .comment-stars::before {
+  content: '';
+  position: absolute; left: -8px; right: -8px; top: -8px; bottom: -8px;
+  background: radial-gradient(ellipse at center, rgba(219,255,115,0.35), transparent 72%);
+  filter: blur(5px);
+  z-index: 0;
+}
+.comment-card .comment-stars .star {
+  position: relative; z-index: 1;
+  width: 18px; height: 18px;
+  fill: var(--lime);
+  stroke: var(--violet-primary);
+  stroke-width: 1.3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.comment-card .comment-source { font-size: 12px; font-weight: 600; color: var(--violet-dark); margin-top: auto; padding-top: 8px; flex-shrink: 0; }
+.comments-scroll-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--violet-lilas); color: var(--violet-dark); border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 14px -4px rgba(96,102,216,0.3);
+  z-index: 2;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+.comments-scroll-btn svg {
+  width: 13px; height: 13px;
+  fill: none; stroke: currentColor;
+  stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round;
+}
+.comments-scroll-btn.is-next { right: -4px; }
+.comments-scroll-btn.is-prev { left: -4px; }
+.comments-scroll-btn:hover { background: var(--violet-primary); color: #fff; transform: translateY(-50%) scale(1.08); }
+.proof-cta { display: inline-block; border: 1px solid var(--violet-dark); border-radius: 999px; padding: 10px 14px; font-size: 14px; font-weight: 600; color: var(--violet-dark); transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease; }
+.proof-cta:hover { background: var(--violet-dark); color: #fff; transform: translateY(-2px); }
+
+.resultats-honnete { text-align: center; font-size: 14px; color: var(--violet-dark); font-style: italic; margin-bottom: 40px; }
+
+.conclusion-block {
+  display: flex; flex-direction: column; gap: 16px;
+  max-width: 1080px;
+  margin: 0 auto;
+  text-align: center;
+}
+.conclusion-block p { color: var(--violet-dark); }
+.conclusion-block .strong-line { font-weight: 600; font-size: 16px; color: var(--violet-dark); }
+.conclusion-block .promise-line {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--violet-dark);
+  text-align: center;
+  margin: 8px 0 0;
+}
+
+/* -------------------- Sur quoi j'interviens -------------------- */
+.section-topics { background: var(--white); text-align: center; }
+.topics-wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 40px 0; }
+.topic-pill {
+  background: var(--violet-lilas-light);
+  border: 1.5px solid #989bdf;
+  border-radius: 999px;
+  padding: 12px 24px;
+  font-size: 14px; font-weight: 500; color: var(--violet-dark);
+  box-shadow: 0 6px 14px -6px rgba(46,48,107,0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.topic-pill:hover {
+  transform: translateY(-3px);
+  border-color: var(--violet-primary);
+  box-shadow: 0 10px 18px -6px rgba(96,102,216,0.25);
+}
+.sectors-banner {
+  background: var(--violet-primary);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  text-align: left;
+}
+.sectors-banner h3 { color: var(--white); font-size: 17px; margin-bottom: 12px; }
+/* violet-lilas sur violet-primary ne passait pas le contraste (3.5:1, il faut
+   4.5:1 en texte normal) : blanc, comme le h3 juste au-dessus. */
+.sectors-banner p { color: var(--white); font-size: 14px; margin: 0; }
+
+/* -------------------- Offres -------------------- */
+.section-offres { background: var(--peach); }
+.offres-title-row { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+.candidature-badge {
+  transform: rotate(-8deg);
+  background: var(--lime);
+  padding: 6px 14px; border-radius: 999px;
+  font-size: 14px; font-weight: 500; color: var(--violet-dark);
+  white-space: nowrap; flex-shrink: 0;
+  /* Petite ombre neutre en plus du halo lime : sans elle le badge se
+     fondait un peu trop dans le fond clair, là il se détache vraiment. */
+  box-shadow: 0 4px 10px -2px rgba(46,48,107,0.25), 0 6px 14px -4px rgba(219,255,115,0.5);
+}
+.offres-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 2.5em 0; align-items: stretch; }
+.offre-card {
+  position: relative;
+  background: var(--white);
+  border: 1px solid var(--violet-lilas);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  box-shadow: 0 16px 32px -12px rgba(46,48,107,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  display: flex; flex-direction: column; gap: 24px;
+  min-height: 470px;
+  box-sizing: border-box;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.offre-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 24px 44px -16px rgba(96,102,216,0.28), 0 4px 12px rgba(46,48,107,0.08);
+  border-color: var(--violet-primary);
+}
+.offre-card.is-featured { border: 2px solid var(--violet-primary); }
+.offre-header { background: var(--violet-lilas-light); border-radius: 16px; padding: 16px; }
+.offre-name { font-family: var(--font-display); font-size: 22px; color: var(--violet-primary); margin: 0; white-space: nowrap; }
+/* Ruban "Recommandé" détaché du nom de l'offre (avant : côte à côte dans une
+   ligne flex, ce qui forçait la carte à s'élargir ou à passer à la ligne dès
+   que le nom de l'offre dépassait une poignée de caractères, et cassait
+   l'alignement des 3 cartes). Posé en haut de carte, il n'a plus d'impact sur
+   la largeur du nom, quelle que soit sa longueur. */
+.offre-badge-featured {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--violet-primary);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--white);
+  white-space: nowrap;
+  box-shadow: 0 6px 14px -2px rgba(47,50,106,0.55);
+}
+.offre-launch-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 12px;
+  background: var(--white);
+  border: 2px solid var(--lime);
+  color: var(--violet-dark);
+  font-size: 12px; font-weight: 700;
+  padding: 5px 14px 5px 10px;
+  border-radius: 999px;
+  animation: badge-pulse 2.2s ease-in-out infinite;
+}
+@keyframes badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(219,255,115,0.55); }
+  50% { box-shadow: 0 0 0 7px rgba(219,255,115,0); }
+}
+.offre-launch-badge svg {
+  width: 13px; height: 13px; flex-shrink: 0;
+  fill: var(--violet-dark);
+}
+.offre-launch-badge .price-old { text-decoration: line-through; opacity: 0.65; font-weight: 500; margin-right: 2px; }
+.offre-subtitle { font-weight: 600; font-size: 16px; color: var(--violet-dark); margin: 8px 0 0; white-space: nowrap; }
+.offre-desc { font-size: 14px; line-height: 1.4; flex-grow: 0; color: var(--violet-dark); }
+.offre-inclus-label { font-size: 14px; font-weight: 600; color: var(--violet-dark); margin-bottom: 10px; }
+/* flex-grow sur le wrapper (pas sur la <ul> qui n'est pas l'enfant direct de .offre-card)
+   pour que les CTA de toutes les cartes s'alignent en bas, quelle que soit la
+   longueur du texte au-dessus. */
+.offre-inclus-wrap { flex-grow: 1; display: flex; flex-direction: column; }
+.offre-inclus { list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--violet-dark); display: flex; flex-direction: column; gap: 10px; }
+.offre-inclus li::before { content: '• '; color: var(--violet-primary); font-weight: 700; }
+.offre-microcopy { font-size: 12px; color: var(--violet-dark); text-align: center; }
+
+.option-tech {
+  background: var(--white);
+  border: 2px dashed rgba(96,102,216,0.5);
+  border-radius: var(--radius-card);
+  padding: 48px;
+  box-shadow: 0 16px 32px -12px rgba(46,48,107,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  margin-top: 2.5em;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.option-tech:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 40px -14px rgba(96,102,216,0.24), 0 4px 12px rgba(46,48,107,0.08);
+  border-color: var(--violet-primary);
+}
+.option-tech-header { background: var(--violet-lilas-light); border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.option-tech > p { color: var(--violet-dark); }
+.option-tech-badge-sm { background: var(--lime); border-radius: 999px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--violet-dark); box-shadow: 0 4px 10px -2px rgba(46,48,107,0.28); }
+.option-tech h3 { font-size: 28px; margin: 0; color: var(--violet-dark); }
+.option-tech-bullets { display: flex; flex-direction: column; gap: 12px; margin: 24px 0; }
+.option-tech-bullet { display: flex; gap: 12px; align-items: flex-start; }
+.option-tech-bullet .dot { width: 8px; height: 8px; border-radius: 4px; background: var(--violet-primary); margin-top: 6px; flex-shrink: 0; }
+.option-tech-bullet > div > strong { display: block; color: var(--violet-dark); font-size: 14px; margin-bottom: 4px; }
+.option-tech-bullet p { font-size: 14px; margin: 0; color: var(--violet-dark); }
+.option-tech-bullet p a { color: var(--violet-primary); text-decoration: none; }
+.option-tech-bullet p a strong { font-weight: 700; }
+.option-tech-bullet p a:hover { color: var(--violet-dark); }
+
+/* Liens en texte simple (bio, FAQ, intro option-tech) : même traitement que
+   les autres liens du site pour rester visuellement identifiables. */
+.qui-copy p a,
+.faq-list p a,
+.point-card h3 a,
+.proof-card h3 a {
+  color: var(--violet-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+.qui-copy p a:hover,
+.faq-list p a:hover,
+.point-card h3 a:hover,
+.proof-card h3 a:hover {
+  color: var(--violet-dark);
+}
+.option-tech > p a {
+  color: var(--violet-primary);
+  text-decoration: none;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+.option-tech > p a:hover {
+  color: var(--violet-dark);
+  text-decoration: none;
+}
+
+/* -------------------- Bouton profil Rebeca -------------------- */
+.rebeca-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.35;
+  gap: 8px;
+  margin: 20px 0 28px;
+  background: #fff;
+  border: 1.5px solid var(--violet-primary);
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--violet-primary);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+.rebeca-btn:hover {
+  background: #fff;
+  color: var(--violet-dark);
+  border-color: var(--violet-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 24px -10px rgba(96,102,216,0.4);
+}
+.option-tech-signoff { font-family: var(--font-sans); font-weight: 700; font-size: 22px; color: var(--violet-dark); margin: 0; }
+
+/* -------------------- Pour qui / pas pour qui -------------------- */
+.section-pourqui { background: var(--cream); }
+.section-pourqui .section-title { margin-bottom: 48px; }
+.pourqui-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.pourqui-card {
+  position: relative;
+  border-radius: var(--radius-card); padding: 40px;
+  display: flex; flex-direction: column; gap: 24px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.pourqui-card.is-yes { background: var(--violet-lilas-light); border: 1px solid var(--violet-lilas); box-shadow: 0 18px 20px rgba(47,50,106,0.1); }
+.pourqui-card.is-no { background: var(--peach); border: 1px solid rgba(244,180,178,0.5); box-shadow: 0 18px 20px rgba(47,50,106,0.08); }
+/* Effet "swipe" à la dating app : la carte se penche du côté opposé à son
+   stamp (match penche à gauche, nope penche à droite), comme si elle
+   glissait. La carte violette (le match) monte plus haut au survol que la
+   carte "nope" : on veut que le positif se remarque plus. Le stamp lui-même
+   se redresse et grossit un peu au survol. */
+.pourqui-card:hover { transform: translateY(-6px) rotate(-1deg); }
+.pourqui-card.is-yes:hover { transform: translateY(-16px) rotate(-1deg); }
+.pourqui-card.is-no:hover { transform: translateY(-6px) rotate(1deg); }
+.pourqui-card.is-yes:hover { box-shadow: 0 28px 40px -10px rgba(96,102,216,0.25); border-color: var(--violet-primary); }
+.pourqui-card.is-no:hover { box-shadow: 0 24px 32px -8px rgba(244,180,178,0.4); border-color: var(--coral); }
+.pourqui-card:hover .match-stamp { transform: rotate(0deg) scale(1.08); }
+.pourqui-card h3 { font-size: 32px; color: var(--violet-dark); }
+/* Stamp façon carte de swipe (MATCH / NOPE), posé en haut de carte, penché
+   comme un vrai tampon encreur. Mêmes icônes coche/croix que les bullets
+   ci-dessous, pas d'emoji. */
+.match-stamp {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: transform 0.25s ease;
+}
+.match-stamp svg {
+  width: 14px; height: 14px;
+  fill: none; stroke: var(--violet-dark);
+  stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round;
+}
+.match-stamp-yes {
+  background: var(--lime);
+  color: var(--violet-dark);
+  transform: rotate(-6deg);
+  box-shadow: 0 6px 14px -4px rgba(219,255,115,0.6);
+}
+.match-stamp-no {
+  background: var(--coral);
+  color: var(--violet-dark);
+  transform: rotate(6deg);
+  box-shadow: 0 6px 14px -4px rgba(244,180,178,0.6);
+}
+.pourqui-bullet { display: flex; gap: 12px; align-items: flex-start; }
+.pourqui-bullet-icon {
+  width: 26px; height: 26px; margin-top: 3px;
+  border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.pourqui-bullet-icon svg {
+  width: 14px; height: 14px;
+  fill: none; stroke: var(--violet-dark);
+  stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round;
+}
+.pourqui-card.is-yes .pourqui-bullet-icon { background: var(--lime); box-shadow: 0 5px 12px -2px rgba(58,55,72,0.35); }
+.pourqui-card.is-no .pourqui-bullet-icon { background: var(--coral); box-shadow: 0 5px 12px -2px rgba(58,55,72,0.3); }
+/* Blanc sur corail passait à peine 1.75:1 (icône presque invisible) : violet-dark comme sur la carte "is-yes". */
+.pourqui-card.is-no .pourqui-bullet-icon svg { stroke: var(--violet-dark); }
+.pourqui-bullet p { margin: 0; font-size: 16px; line-height: 1.5; color: var(--violet-dark); }
+
+/* -------------------- Comment ça se passe + scarcity -------------------- */
+.section-process { background: var(--white); }
+.process-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--cream);
+  border: 1px solid var(--violet-lilas);
+  border-radius: var(--radius-card);
+  padding: 64px 48px;
+  box-shadow: 0 16px 32px -12px rgba(46,48,107,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  text-align: center;
+  margin-bottom: 40px;
+}
+.process-card::before {
+  content: '';
+  position: absolute; top: -70px; right: -70px;
+  width: 200px; height: 200px; border-radius: 50%;
+  background: radial-gradient(circle, var(--violet-lilas), transparent 70%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+.process-card::after {
+  content: '';
+  position: absolute; bottom: -80px; left: -80px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: radial-gradient(circle, var(--peach), transparent 70%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.process-card > * { position: relative; z-index: 1; }
+.process-steps { display: flex; align-items: flex-start; justify-content: center; margin-top: 48px; }
+.process-step {
+  flex: 1; max-width: 280px;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  padding: 32px 24px;
+  border-radius: 16px;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+.process-step:hover { transform: translateY(-6px); background: rgba(255,255,255,0.55); }
+.process-number {
+  width: 48px; height: 48px; border-radius: 999px;
+  background: var(--violet-lilas);
+  border: 2px solid var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 22px; color: var(--violet-dark);
+  box-shadow: 0 4px 12px rgba(96,102,216,0.25);
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+.process-step:hover .process-number { transform: scale(1.12); background: var(--violet-primary); color: var(--white); }
+.process-arrow { color: var(--violet-primary); font-size: 22px; padding-top: 32px; line-height: 48px; width: 40px; text-align: center; opacity: 0.55; }
+.process-step p { font-size: 16px; margin: 0; color: var(--violet-dark); }
+
+.scarcity-banner {
+  background: var(--violet-dark);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  text-align: center;
+  box-shadow: 0 16px 32px rgba(46,48,107,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  margin-bottom: 24px;
+}
+.scarcity-banner h3 { color: var(--white); font-size: 28px; margin-bottom: 8px; }
+.scarcity-banner p { color: var(--violet-lilas-light); font-size: 14px; margin: 0; }
+.process-footnote { text-align: center; font-weight: 600; font-size: 14px; color: var(--violet-primary); }
+
+/* -------------------- FAQ -------------------- */
+.section-faq { background: var(--violet-lilas-light); }
+.faq-list { max-width: 800px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 16px; }
+details {
+  background: var(--white);
+  border: 1px solid var(--violet-lilas);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+}
+summary { font-weight: 600; font-size: 16px; color: var(--violet-dark); cursor: pointer; list-style: none; transition: color 0.2s ease; }
+summary:hover { color: var(--violet-primary); }
+summary::-webkit-details-marker { display: none; }
+summary::after {
+  content: '+';
+  float: right;
+  font-size: 22px;
+  color: var(--violet-primary);
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+details[open] summary::after { transform: rotate(135deg); }
+details p { margin-top: 14px; font-size: 14px; color: var(--violet-dark); }
+
+/* -------------------- CTA final -------------------- */
+.section-cta-final { background: var(--violet-dark); text-align: center; padding: 120px 0; }
+.section-cta-final .btn { font-size: 17px; }
+.section-cta-final h2 { color: var(--white); font-size: clamp(2rem, 4vw, 3rem); max-width: 800px; margin: 0 auto 32px; }
+.section-cta-final .cta-note { color: var(--violet-lilas); font-size: 14px; margin-top: 16px; }
+.section-cta-final .cta-reassurance { color: var(--violet-lilas); font-size: 14px; max-width: 480px; margin: 0 auto 28px; line-height: 1.5; }
+
+/* -------------------- Lien discret vers Contact, près des CTA -------------------- */
+/* Volontairement pas dans le menu principal : le site pousse vers UNE action
+   (bloquer l'appel), ce lien attrape juste les hésitantes sans concurrencer le CTA. */
+.cta-alt-link {
+  display: block;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--violet-dark);
+  opacity: 0.7;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease, color 0.2s ease, transform 0.25s ease;
+}
+.cta-alt-link:hover { opacity: 1; color: var(--violet-primary); transform: translateY(-2px); }
+.cta-alt-link.is-on-dark { color: var(--violet-lilas); opacity: 0.85; }
+.cta-alt-link.is-on-dark:hover { opacity: 1; color: var(--white); }
+
+/* -------------------- Teaser entreprises -------------------- */
+.section-teaser-entreprises { background: var(--violet-lilas-light); padding: 60px 0; text-align: center; }
+.section-teaser-entreprises p { font-size: 22px; color: var(--violet-dark); margin-bottom: 28px; }
+
+/* -------------------- Entreprises : Hero -------------------- */
+.hero-entreprises {
+  background: var(--violet-primary);
+  padding: 80px 0 72px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-entreprises::before, .hero-entreprises::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(2px);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-entreprises::before { width: 380px; height: 380px; right: -120px; top: -140px; background: radial-gradient(circle, var(--lime), transparent 70%); }
+.hero-entreprises::after { width: 320px; height: 320px; left: -140px; bottom: -160px; background: radial-gradient(circle, var(--coral), transparent 70%); }
+.hero-entreprises .container { position: relative; z-index: 1; }
+.hero-entreprises h1 {
+  color: var(--white);
+  max-width: 1000px;
+  margin: 0 auto 40px;
+  font-size: clamp(2.2rem, 4.2vw, 3.75rem);
+}
+/* Même correctif que .sectors-banner p : violet-lilas sur violet-primary était sous les 4.5:1 requis. */
+.hero-entreprises-subtitle { color: var(--white); max-width: 780px; margin: 0 auto 32px; font-size: 17px; line-height: 1.6; }
+
+/* Hero entreprises en 2 colonnes : texte + visuel, comme le hero de la home. */
+.hero-entreprises-inner { display: flex; align-items: center; gap: 56px; text-align: left; }
+.hero-entreprises-text { flex: 1.15; }
+.hero-entreprises-inner h1 { margin: 0 0 32px; text-align: left; font-size: clamp(1.9rem, 2.9vw, 2.9rem); }
+.split-word-accent { color: var(--lime); }
+.hero-entreprises-inner .hero-entreprises-subtitle { margin: 0 0 28px; text-align: left; }
+.hero-entreprises-image { flex-shrink: 0; width: 300px; position: relative; }
+.hero-entreprises-image img {
+  width: 100%; height: auto; display: block;
+  filter: drop-shadow(0 24px 32px rgba(0,0,0,0.28));
+}
+.hero-ent-floating-tag { left: -28px; top: 12%; animation-duration: 5.6s; animation-delay: 0.4s; }
+.hero-ent-floating-accent { right: -10px; top: 68%; background: var(--lime); animation-duration: 3.1s; animation-delay: 1.7s; }
+
+/* -------------------- Entreprises : cartes numérotées -------------------- */
+.interventions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 2.5em 0; align-items: stretch; }
+.num-card {
+  background: var(--white);
+  border: 1px solid var(--violet-lilas);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  box-shadow: 0 16px 32px -12px rgba(46,48,107,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+.num-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 24px 44px -16px rgba(96,102,216,0.28), 0 4px 12px rgba(46,48,107,0.08);
+  border-color: var(--violet-primary);
+}
+.num-card.is-featured { border: 2px solid var(--violet-primary); }
+.num-badge {
+  width: 44px; height: 44px; border-radius: 999px;
+  background: var(--violet-lilas);
+  border: 2px solid var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 16px; color: var(--violet-dark);
+  box-shadow: 0 4px 12px rgba(96,102,216,0.25);
+  margin-bottom: 16px;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+.num-card:hover .num-badge { transform: scale(1.12); background: var(--violet-primary); color: var(--white); }
+.num-card h3 { font-size: 22px; margin-bottom: 12px; }
+.num-card p { font-size: 14px; color: var(--violet-dark); flex-grow: 1; }
+.num-card-cta {
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 20px;
+  border: 1px solid var(--violet-dark);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--violet-dark);
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+.num-card-cta:hover { background: var(--violet-dark); color: #fff; transform: translateY(-2px); }
+
+/* -------------------- Entreprises : Pourquoi moi -------------------- */
+.points-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin: 2.5em 0; }
+.point-card {
+  background: var(--white);
+  border: 1px solid var(--violet-lilas);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  box-shadow: 0 16px 32px -12px rgba(46,48,107,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.point-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 40px -14px rgba(96,102,216,0.24), 0 4px 12px rgba(46,48,107,0.08);
+  border-color: var(--violet-primary);
+}
+.point-card-icon {
+  width: 40px; height: 40px;
+  background: var(--violet-lilas-light);
+  border: 2px solid var(--violet-primary);
+  border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 10px rgba(0,0,0,0.08);
+}
+.point-card h3 { font-size: 17px; color: var(--violet-primary); margin-bottom: 12px; }
+.point-card p { font-size: 14px; color: var(--violet-dark); }
+.point-card p a { color: var(--violet-primary); font-weight: 600; transition: color 0.2s ease; }
+.point-card p a:hover { color: var(--violet-dark); }
+
+/* -------------------- Entreprises : Tarifs -------------------- */
+.section-tarifs-ent { background: var(--peach); text-align: center; }
+/* Simple texte centré, sans carte : une carte blanche vide autour d'une seule
+   phrase faisait "carré vide" sur le fond beige. */
+.tarifs-text { font-size: 17px; color: var(--violet-dark); font-weight: 500; margin: 24px 0 0; }
+.tarifs-ent-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 32px; text-align: left; }
+.tarifs-ent-card {
+  background: var(--white); border: 1px solid transparent; border-radius: var(--radius-card);
+  padding: 28px; box-shadow: 0 10px 20px -10px rgba(58,55,72,0.15);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.tarifs-ent-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 40px -14px rgba(96,102,216,0.24), 0 4px 12px rgba(46,48,107,0.08);
+  border-color: var(--violet-primary);
+}
+.tarifs-ent-format { font-weight: 700; color: var(--violet-dark); font-size: 17px; margin: 0 0 4px; transition: color 0.25s ease; }
+.tarifs-ent-card:hover .tarifs-ent-format { color: var(--violet-primary); }
+.tarifs-ent-duration {
+  display: inline-block; font-size: 14px; font-weight: 600; color: var(--violet-primary);
+  text-transform: uppercase; letter-spacing: 0.03em; margin: 0 0 12px;
+  transition: transform 0.25s ease;
+}
+.tarifs-ent-card:hover .tarifs-ent-duration { transform: translateX(4px); }
+.tarifs-ent-note { font-size: 14px; color: var(--violet-dark); margin: 0; line-height: 1.5; }
+
+/* -------------------- Preuve sociale (entreprises) -------------------- */
+.section-b2b-proof { text-align: center; }
+.b2b-proof-label { font-size: 14px; font-weight: 600; color: var(--violet-dark); text-transform: uppercase; letter-spacing: 0.03em; margin: 0 0 20px; }
+.b2b-proof-stats { text-align: left; max-width: 640px; margin-left: auto; margin-right: auto; }
+.b2b-proof-ctas { margin-top: 28px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* -------------------- Footer -------------------- */
+.site-footer { background: var(--charbon); padding: 40px 0; }
+.footer-inner { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 24px; }
+.footer-brand p:first-child { font-family: var(--font-display); font-size: 22px; color: var(--white); margin-bottom: 4px; }
+.footer-brand p { color: var(--gris-clair-sur-fonce); font-size: 14px; max-width: 280px; }
+.footer-tagline { max-width: none; white-space: nowrap; margin-bottom: 0; font-style: italic; }
+.footer-bottom { margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.12); }
+.footer-copyright { font-size: 12px; font-style: normal; color: var(--gris-clair-sur-fonce); opacity: 0.7; margin: 0; white-space: nowrap; }
+.footer-copyright a { color: var(--violet-lilas); transition: color 0.2s ease; }
+.footer-copyright a:hover { color: var(--white); }
+.footer-brand-title { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; max-width: none; }
+.footer-cols { display: flex; flex-wrap: wrap; gap: 48px; }
+.footer-col p:first-child { font-weight: 700; color: var(--white); margin-bottom: 8px; }
+.footer-col p { color: var(--gris-clair-sur-fonce); font-size: 14px; margin-bottom: 4px; }
+/* Liens du footer : avant, couleur héritée du texte simple (color: inherit en
+   inline) donc invisibles comme liens, et aucun hover. Couleur distincte +
+   soulignement au survol pour que ce soit clairement cliquable. */
+.footer-col p a { color: var(--violet-lilas); transition: color 0.2s ease; }
+.footer-col p a:hover { color: var(--white); }
+.footer-social { display: inline-flex; gap: 12px; align-items: center; }
+.footer-social a { color: var(--white); display: inline-flex; transition: color 0.2s ease, transform 0.2s ease; }
+.footer-social a:hover { color: var(--lime); transform: translateY(-2px); }
+
+/* -------------------- Lien LinkedIn dans le corps de la page contact -------------------- */
+.contact-linkedin { margin-top: 16px; }
+.contact-linkedin a {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 600; color: var(--violet-dark);
+  transition: color 0.2s ease;
+}
+.contact-linkedin a:hover { color: var(--violet-primary); }
+.contact-linkedin svg { flex-shrink: 0; }
+
+/* -------------------- Reveal states -------------------- */
+.js-anim [data-reveal-split], .js-anim [data-reveal-stagger] {
+  opacity: 0; transform: translateY(24px);
+}
+/* [data-reveal] seul : :not(.is-revealed) plutôt qu'une règle .is-revealed
+   séparée. Une règle .is-revealed avec transform:none aurait une specificité
+   plus forte que .btn-primary:hover etc. et bloquerait quand même l'effet au
+   survol après la fin de l'animation. Avec :not(), une fois la classe posée
+   (par script.js, à la fin du tween GSAP), cette règle ne matche plus du
+   tout : aucune déclaration transform ne reste en compétition avec :hover. */
+.js-anim [data-reveal]:not(.is-revealed) {
+  opacity: 0; transform: translateY(24px);
+}
+/* Cascade "Comment ça se passe" : effet réservé au mobile, où les 3 étapes
+   sont empilées (desktop les affiche déjà côte à côte avec les flèches, pas
+   besoin d'un effet en plus). */
+@media (min-width: 1001px) {
+  .process-step[data-reveal-stagger] { opacity: 1 !important; transform: none !important; }
+}
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 1000px) {
+  .container { padding: 0 24px; }
+  /* Ordre mobile calqué sur la maquette Figma "coach-martine-mobile" :
+     badge + titre → sous-titre → photo → CTA + preuve sociale.
+     .hero-text passe en display:contents pour que ses enfants deviennent
+     des items flex directs de .hero-inner et puissent être réordonnés. */
+  .hero { min-height: auto; padding: 32px 0; }
+  .hero-inner { flex-direction: column; gap: 12px; }
+  .hero-text { display: contents; }
+  /* La pill "au moins une meuf..." reste sur une seule ligne en desktop
+     (assez de place), mais sur mobile ça dépasse l'écran : on repasse en
+     retour à la ligne normal pour éviter le débordement horizontal. */
+  .social-proof { white-space: normal; text-align: left; }
+  .section-offres .section-intro { text-align: left; }
+  .resultats-intro { text-align: left; margin-left: 0; margin-right: 0; }
+  .resultats-honnete { text-align: left; }
+  .conclusion-block { text-align: left; }
+  .headline-block { order: 1; width: 100%; margin-top: 0; }
+  .hero-subtitle { order: 2; }
+  .hero-tagline { order: 2; margin-top: 0; }
+  .hero-image-wrap { order: 3; max-width: 520px; margin: 4px 0; }
+  .hero-photo-mask { width: 100%; max-width: 520px; }
+  .hero-cta { order: 4; align-items: center; text-align: center; }
+  /* La preuve sociale garde son texte aligné à gauche (plus lisible sur
+     plusieurs lignes), seuls le bouton et le lien du dessus/dessous sont centrés. */
+  .hero-cta .social-proof { text-align: left; }
+  .launch-banner-inner { padding: 16px 20px; }
+  /* Sur desktop le badge est positionné en absolu par-dessus le titre (coordonnées
+     Figma). Ces coordonnées en % ne collent plus sur mobile car le titre se
+     découpe différemment (2 lignes pleine largeur). Pour retrouver le même esprit
+     "badge qui flotte à côté du titre" sans jamais recouvrir le texte, on le fait
+     flotter à droite et remonter d'environ une ligne : comme la 2e ligne ("Sauf le
+     plan ?") est courte, il y a toujours de la place à sa droite. */
+  .scarcity-badge {
+    position: static;
+    display: inline-block;
+    margin-top: 18px;
+    transform: rotate(-3deg);
+  }
+  .js-anim .scarcity-badge { animation: none; opacity: 1; }
+  .qui-split { flex-direction: column; gap: 24px; margin-bottom: 32px; }
+  .qui-photo { width: 100%; max-width: 480px; }
+  /* Sur desktop le badge déborde à gauche de la photo (left: -28px), ce qui
+     colle trop bord de l'écran sur mobile où la photo prend presque toute
+     la largeur du container. On le ramène à l'intérieur de la photo. */
+  .editorial-badge { left: 12px; }
+  .proof-blocks { grid-template-columns: 1fr; }
+  /* Les pills les plus longues ("Recrutement marketing, graphisme & design")
+     retombaient sur 2 lignes en gardant leur padding/rayon desktop : ça donnait
+     une forme allongée bizarre plutôt qu'une vraie pilule. Padding et rayon
+     resserrés pour que ça reste propre même sur 2 lignes. */
+  .topics-wrap { gap: 12px; margin: 28px 0; }
+  .topic-pill { padding: 12px 18px; font-size: 13px; border-radius: 999px; line-height: 1.4; max-width: 100%; text-align: left; }
+  .parle-grid { grid-template-columns: 1fr; }
+  .offres-grid { grid-template-columns: 1fr; }
+  .offre-card { min-height: auto; }
+  /* Même esprit "moelleux" que le CTA sticky : plus de hauteur et une ombre
+     plus généreuse, pour que le bouton ait l'air d'un vrai bouton pilule et
+     pas d'une barre plate collée à la carte. */
+  .btn-card { padding: 16px 24px; border-radius: 999px; box-shadow: 0 10px 22px -10px rgba(46,48,107,0.3); }
+  .pourqui-grid { grid-template-columns: 1fr; }
+  .interventions-grid { grid-template-columns: 1fr; }
+  .points-grid { grid-template-columns: 1fr; }
+  .process-steps { flex-direction: column; }
+  .process-step { flex-direction: row; align-items: flex-start; text-align: left; max-width: none; gap: 16px; }
+  .process-number { flex-shrink: 0; }
+  .process-arrow { display: none; }
+  .process-card { padding: 40px 24px; }
+  /* Header mobile : logo à gauche, hamburger à droite (convention la plus
+     répandue). Le bouton est premier dans le DOM (accessibilité/tab order),
+     donc on inverse juste l'ordre visuel avec `order`. Le CTA "Bloquer mon
+     appel gratuit" et les liens de nav sont cachés ici : ils passent dans le
+     tiroir .mobile-menu, en dehors du header dans le DOM, voir plus bas). */
+  .header-inner { justify-content: space-between; gap: 14px; }
+  .nav-toggle { display: flex; order: 2; }
+  .logo { order: 1; }
+  .main-nav { display: none; }
+  .has-sticky-cta .mobile-sticky-cta {
+    display: block;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 150;
+    background: var(--white);
+    border-top: 1px solid var(--violet-lilas);
+    /* padding-bottom élargi : l'ombre du bouton pilule a besoin d'un peu de
+       marge sous elle, sinon elle se fait couper net par le bord de l'écran
+       (le conteneur est collé à bottom:0, rien ne dépasse en dessous). */
+    padding: 12px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -8px 20px -12px rgba(46,48,107,0.18);
+    transition: transform 0.3s ease;
+  }
+  /* Masqué (glissé hors écran) quand la section offres est visible : ses
+     propres CTA prennent le relais, pas la peine d'empiler deux CTA. */
+  .has-sticky-cta .mobile-sticky-cta.is-hidden { transform: translateY(120%); }
+  /* Plutôt qu'une barre pleine largeur (effet "toolbar" plat), un bouton pilule
+     centré, plus généreux en hauteur : ça donne un CTA qui flotte et qui
+     donne envie de cliquer, pas une barre d'outils. */
+  .mobile-sticky-cta { text-align: center; }
+  .mobile-sticky-cta .btn { display: inline-flex; width: auto; padding: 15px 36px; box-shadow: 0 8px 18px -8px rgba(46,48,107,0.35); }
+  .has-sticky-cta { padding-bottom: 84px; }
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 80vw;
+    max-width: 320px;
+    background: var(--white);
+    border-left: 1px solid var(--violet-lilas);
+    box-shadow: -16px 0 32px -12px rgba(46,48,107,0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    padding: 20px 24px 32px;
+    overflow-y: auto;
+    z-index: 200;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .mobile-menu.is-open { transform: translateX(0); }
+  .nav-links-close {
+    align-self: flex-end;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    background: none; border: none; cursor: pointer;
+    font-size: 22px; line-height: 1; color: var(--violet-dark);
+    margin-bottom: 16px;
+  }
+  .mobile-menu .nav-link { padding: 14px 8px; font-size: 17px; border-bottom: 1px solid var(--violet-lilas-light); }
+  .mobile-menu .nav-link:hover, .mobile-menu .nav-link.is-active { color: var(--violet-primary); }
+  .mobile-menu .nav-cta-mobile { display: block; text-align: center; margin-top: 24px; }
+  .footer-inner { flex-direction: column; }
+  .footer-cols { gap: 40px; }
+  .comment-card { flex-basis: 220px; }
+  .proof-card h3 { font-size: 28px; }
+  .proof-stats-row { flex-direction: column; gap: 16px; }
+  .proof-highlight:not(:last-child) { padding-right: 0; padding-bottom: 16px; }
+  .proof-highlight:not(:first-child) { padding-left: 0; }
+  .hero-entreprises { padding: 56px 0 48px; }
+  .hero-entreprises-inner { flex-direction: column; text-align: center; gap: 20px; }
+  .hero-entreprises-inner h1, .hero-entreprises-inner .hero-entreprises-subtitle { text-align: center; margin-left: auto; margin-right: auto; }
+  /* Photo un peu plus grande et resserrée sur le texte : plus d'énergie
+     "Martine" en haut de page, moins de vide entre les deux. */
+  .hero-entreprises-image { width: 260px; order: -1; }
+  .hero-ent-floating-tag { left: -10px; top: 8%; font-size: 12px; padding: 8px 12px; }
+  .hero-ent-floating-accent { right: -6px; width: 36px; height: 36px; font-size: 17px; }
+  .num-card, .point-card { padding: 24px; }
+  .points-grid { gap: 16px; }
+  .sectors-banner { padding: 24px; }
+  .option-tech { padding: 32px 24px; }
+  .option-tech-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  /* Pas une barre pleine largeur : une petite pilule compacte, centrée, comme
+     un vrai bouton secondaire, pas un CTA principal. Couronne, texte, flèche
+     sur une seule ligne : police et padding resserrés pour que ça tienne. */
+  .rebeca-btn { display: flex; width: fit-content; max-width: 100%; margin-left: auto; margin-right: auto; justify-content: center; text-align: center; white-space: nowrap; padding: 11px 18px; font-size: 13px; gap: 6px; }
+  .tarifs-ent-grid { grid-template-columns: 1fr; }
+  .b2b-proof-stats { flex-direction: column; gap: 16px; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .logo { font-size: 17px; }
+  .btn-sm { padding: 8px 14px; font-size: 14px; }
+  .proof-card { padding: 28px 20px; }
+  .proof-card h3 { font-size: 22px; white-space: normal; }
+  .offre-card { padding: 24px; }
+  .offre-name { white-space: normal; }
+  .offre-subtitle { white-space: normal; }
+  .footer-tagline { white-space: normal; }
+  .launch-banner-inner { font-size: 12px; padding: 18px 20px; gap: 12px; }
+  .hero-entreprises h1 { font-size: 2rem; }
+  .num-badge { width: 40px; height: 40px; font-size: 14px; }
+  .process-card { padding: 32px 16px; }
+  .proof-stat-value { font-size: 28px; }
+  .proof-stats-stack .proof-stat-value { font-size: 28px; }
+  .logos-track { gap: 40px; }
+  .logos-track img { height: 22px; }
+  h2.section-title { font-size: clamp(1.5rem, 6vw, 2rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal], [data-reveal-split], [data-reveal-stagger] { opacity: 1 !important; transform: none !important; }
+  html { scroll-behavior: auto; }
+  .floating-tag, .floating-accent, .editorial-badge, .scarcity-badge, .offre-launch-badge, .social-proof .dot { animation: none !important; opacity: 1 !important; }
+}
+
+/* -------------------- Page Contact -------------------- */
+.section-contact { padding-top: 64px; }
+.contact-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 64px;
+  align-items: start;
+  max-width: 1080px;
+}
+.contact-intro h1 { font-size: clamp(1.6rem, 2.6vw, 2.2rem); line-height: 1.15; margin-bottom: 16px; }
+.contact-subtitle { font-size: 17px; color: var(--violet-dark); margin-bottom: 32px; }
+.contact-alt {
+  background: var(--violet-lilas-light);
+  border-radius: var(--radius-card);
+  padding: 24px;
+}
+.contact-alt p { font-weight: 600; color: var(--violet-dark); margin-bottom: 16px; }
+
+.contact-form {
+  background: var(--white);
+  border: 1px solid var(--violet-lilas);
+  border-radius: var(--radius-card);
+  padding: 40px;
+  box-shadow: 0 16px 32px -12px rgba(46,48,107,0.08), 0 2px 8px rgba(0,0,0,0.04);
+}
+/* Honeypot anti-spam Netlify : masqué visuellement mais présent dans le DOM
+   (les bots remplissent souvent les champs cachés en display:none/hidden). */
+.hp-field { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-weight: 600; font-size: 14px; color: var(--violet-dark); margin-bottom: 6px; }
+.form-group input, .form-group textarea {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: var(--charbon);
+  background: var(--violet-lilas-light);
+  border: 1px solid var(--violet-lilas);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.form-group input:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: var(--violet-primary);
+  box-shadow: 0 0 0 3px rgba(96,102,216,0.18);
+}
+.form-group input::placeholder, .form-group textarea::placeholder { color: var(--violet-dark); opacity: 0.4; }
+.form-group textarea { resize: vertical; min-height: 120px; }
+.contact-form .btn { width: 100%; margin-top: 4px; }
+.contact-form-note { text-align: center; font-size: 14px; color: var(--violet-dark); margin-top: 16px; }
+
+/* Message d'erreur perso par champ (remplace les bulles de validation moches
+   du navigateur : formulaire en novalidate, tout est géré en JS). */
+.field-error {
+  display: block;
+  min-height: 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #c1433c; /* variante plus foncée de --coral (#f4b4b2), lisible sur fond blanc */
+  margin-top: 6px;
+}
+.form-group.has-error input, .form-group.has-error textarea {
+  border-color: var(--coral);
+  background: var(--peach);
+}
+.form-group.has-error input:focus, .form-group.has-error textarea:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(244,180,178,0.4);
+}
+
+/* -------------------- Pop-up de confirmation d'envoi -------------------- */
+.contact-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(47, 50, 106, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.contact-modal-overlay[hidden] { display: flex; } /* on garde flex pour permettre la transition d'ouverture via JS avant de retirer hidden */
+.contact-modal-overlay.is-visible { opacity: 1; pointer-events: auto; }
+.contact-modal {
+  position: relative;
+  background: var(--white);
+  border-radius: var(--radius-card);
+  padding: 40px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 24px 60px -12px rgba(46,48,107,0.4);
+  transform: translateY(20px) scale(0.96);
+  transition: transform 0.3s ease;
+}
+.contact-modal-overlay.is-visible .contact-modal { transform: translateY(0) scale(1); }
+.contact-modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border: none;
+  background: var(--violet-lilas-light);
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--violet-dark);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.contact-modal-close:hover { background: var(--violet-primary); color: var(--white); }
+.contact-modal-icon { display: block; font-size: 40px; margin-bottom: 12px; }
+.contact-modal h2 { font-family: var(--font-display); font-size: 26px; color: var(--violet-dark); margin-bottom: 12px; }
+.contact-modal p { font-size: 15px; color: var(--violet-dark); margin-bottom: 24px; }
+.contact-modal-btn { width: 100%; }
+
+@media (max-width: 900px) {
+  .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 480px) {
+  .contact-form { padding: 28px 20px; }
+  .contact-modal { padding: 32px 24px; }
+}
+
+/* -------------------- Page 404 -------------------- */
+.section-404 {
+  min-height: calc(100vh - 72px);
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 56px 0;
+}
+.section-404::before, .section-404::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(2px);
+  opacity: 0.35;
+  z-index: 0;
+}
+.section-404::before { width: 420px; height: 420px; right: -120px; top: -120px; background: radial-gradient(circle, var(--coral), transparent 70%); }
+.section-404::after { width: 360px; height: 360px; left: -180px; bottom: -180px; background: radial-gradient(circle, var(--violet-lilas), transparent 70%); }
+.error-404-inner { position: relative; z-index: 1; text-align: center; max-width: 560px; margin: 0 auto; }
+.error-code {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 16vw, 9rem);
+  line-height: 1;
+  color: var(--violet-lilas);
+  margin-bottom: 0;
+}
+.section-404 h1 { font-size: clamp(1.8rem, 3.2vw, 2.5rem); margin-top: 0.1em; }
+.error-text { font-size: 17px; color: var(--violet-dark); max-width: 460px; margin: 0 auto 32px; }
+.error-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+@media (max-width: 480px) {
+  .section-404 { padding: 40px 0; min-height: calc(100vh - 64px); }
+  .error-actions { flex-direction: column; width: 100%; }
+  .error-actions .btn { width: 100%; }
+}

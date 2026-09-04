@@ -1,0 +1,36 @@
+User-agent: *
+Allow: /
+
+# Crawlers IA (réponses ChatGPT, Claude, Perplexity, recherche générative Google)
+# explicitement autorisés pour être cité comme source.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://martinetecoach.fr/sitemap.xml
