@@ -39,6 +39,23 @@ function loadGoogleAnalytics() {
   gtag('config', GA_MEASUREMENT_ID);
 }
 
+/* -------------------- Tracking clic "Réserver un appel" --------------------
+   Un seul listener délégué sur tous les boutons Calendly (peu importe la page
+   ou le libellé) : envoie un événement GA4 juste avant que le popup Calendly
+   ne s'ouvre. Si le consentement n'a pas été donné, gtag n'existe pas encore :
+   on ne fait rien, silencieusement. */
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('a[href*="calendly.com"]');
+  if (!link) return;
+  if (typeof gtag === 'function') {
+    gtag('event', 'click_book_call', {
+      link_url: link.getAttribute('href'),
+      link_text: link.textContent.trim(),
+      page_path: window.location.pathname,
+    });
+  }
+});
+
 (function initCookieConsent() {
   const banner = document.getElementById('cookie-banner');
   if (!banner) return;

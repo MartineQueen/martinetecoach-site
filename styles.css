@@ -496,6 +496,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .proof-card.is-instagram:hover { border-color: var(--violet-primary); }
 .proof-card h3 { font-size: 32px; margin-bottom: 16px; white-space: nowrap; }
 .proof-subtitle { font-weight: 600; font-size: 14px; color: var(--violet-dark); }
+.proof-headline { font-size: 30px; font-weight: 800; line-height: 1.15; color: var(--violet-dark); margin: 0 0 14px; }
 .proof-card p.proof-body { font-size: 14px; color: var(--violet-dark); }
 .proof-stats-row { display: flex; gap: 16px; margin: 24px 0; }
 .proof-highlight { flex: 1; padding: 4px 0; display: flex; flex-direction: column; justify-content: flex-start; min-width: 0; }
@@ -859,6 +860,78 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
   box-shadow: 0 14px 24px -10px rgba(96,102,216,0.4);
 }
 .option-tech-signoff { font-family: var(--font-sans); font-weight: 700; font-size: 22px; color: var(--violet-dark); margin: 0; }
+
+/* -------------------- Témoignages en attente (bloc temporaire) -------------------- */
+.section-temoignages-attente {
+  position: relative;
+  overflow: hidden;
+  background: var(--violet-dark);
+  padding: 80px 0;
+}
+.section-temoignages-attente::before {
+  content: '';
+  position: absolute; top: -140px; right: -100px;
+  width: 340px; height: 340px; border-radius: 50%;
+  background: radial-gradient(circle, var(--violet-primary), transparent 70%);
+  opacity: 0.55;
+}
+.section-temoignages-attente::after {
+  content: '';
+  position: absolute; bottom: -160px; left: -120px;
+  width: 320px; height: 320px; border-radius: 50%;
+  background: radial-gradient(circle, var(--lime), transparent 70%);
+  opacity: 0.12;
+}
+.section-temoignages-attente .container { position: relative; z-index: 1; }
+.temoignages-eyebrow {
+  display: inline-block;
+  background: var(--lime);
+  color: var(--violet-dark);
+  font-size: 13px; font-weight: 700;
+  padding: 6px 16px; border-radius: 999px;
+  margin-bottom: 20px;
+}
+.section-temoignages-attente .section-title { color: var(--white); }
+.section-temoignages-attente .section-intro { color: var(--violet-lilas-light); }
+.temoignage-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 2.5em;
+}
+.temoignage-preview-card {
+  background: var(--white);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  box-shadow: 0 20px 44px -16px rgba(15,10,40,0.45), 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.temoignage-preview-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 28px 54px -16px rgba(15,10,40,0.55), 0 6px 16px rgba(0,0,0,0.1);
+}
+.temoignage-preview-pending {
+  display: inline-block;
+  background: var(--violet-lilas-light);
+  color: var(--violet-dark);
+  font-size: 13px; font-weight: 600;
+  padding: 5px 12px; border-radius: 999px;
+  margin-bottom: 16px;
+}
+.temoignage-preview-name { font-size: 20px; font-weight: 800; color: var(--violet-dark); margin: 0 0 8px; }
+.temoignage-preview-desc { font-size: 15px; color: var(--violet-dark); margin: 0 0 16px; }
+.temoignage-preview-desc a { color: var(--violet-primary); font-weight: 600; }
+.temoignage-preview-category {
+  display: inline-block;
+  background: var(--violet-dark);
+  color: var(--white);
+  font-size: 12px; font-weight: 700;
+  padding: 5px 14px; border-radius: 999px;
+}
+@media (max-width: 700px) {
+  .section-temoignages-attente { padding: 56px 0; }
+  .temoignage-preview-grid { grid-template-columns: 1fr; }
+}
 
 /* -------------------- Pour qui / pas pour qui -------------------- */
 .section-pourqui { background: var(--cream); }
@@ -1419,6 +1492,7 @@ details p { margin-top: 14px; font-size: 14px; color: var(--violet-dark); }
   .btn-sm { padding: 8px 14px; font-size: 14px; }
   .proof-card { padding: 28px 20px; }
   .proof-card h3 { font-size: 22px; white-space: normal; }
+  .proof-headline { font-size: 22px; }
   .offre-card { padding: 24px; }
   .offre-name { white-space: normal; }
   .offre-subtitle { white-space: normal; }
