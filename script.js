@@ -461,4 +461,34 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('Animation init failed, contenu affiché sans animation :', err);
   }
 
+  /* -------------------- Témoignages : "Voir plus" synchro + hauteur des cartes --------------------
+     Sur desktop (cartes côte à côte), un clic sur "Voir plus" déplie TOUTES les
+     cartes de la grille ensemble et on remesure la hauteur naturelle de chaque
+     bloc .temoignage-preview-top pour garder les pastilles alignées. Sur mobile
+     (cartes empilées), chaque carte se déplie indépendamment : pas besoin de
+     synchroniser puisqu'il n'y a plus d'alignement horizontal à préserver. */
+  const isDesktopQuotes = () => window.matchMedia('(min-width: 701px)').matches;
+  document.querySelectorAll('.temoignage-preview-grid').forEach((grid) => {
+    const tops = grid.querySelectorAll('.temoignage-preview-top');
+    if (!tops.length) return;
+    const syncHeights = () => {
+      tops.forEach((t) => { t.style.minHeight = ''; });
+      if (!isDesktopQuotes()) return;
+      const max = Math.max(...[...tops].map((t) => t.offsetHeight));
+      tops.forEach((t) => { t.style.minHeight = `${max}px`; });
+    };
+    grid.addEventListener('click', (e) => {
+      const toggle = e.target.closest('.js-quote-toggle');
+      if (!toggle) return;
+      if (isDesktopQuotes()) {
+        grid.classList.toggle('quotes-expanded');
+      } else {
+        toggle.closest('.temoignage-preview-card').classList.toggle('quotes-expanded');
+      }
+      syncHeights();
+    });
+    window.addEventListener('resize', syncHeights);
+    syncHeights();
+  });
+
 });
