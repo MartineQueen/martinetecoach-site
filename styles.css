@@ -160,8 +160,9 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
   height: 72px;
   display: flex; align-items: center;
   border-bottom: 1px solid transparent;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
+.site-header.is-hidden { transform: translateY(-100%); }
 .site-header.is-scrolled { border-bottom-color: var(--violet-lilas); box-shadow: 0 4px 20px -8px rgba(46,48,107,0.1); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
 .logo { font-family: var(--font-display); font-size: 22px; color: var(--violet-dark); }
@@ -1498,7 +1499,9 @@ details p { margin-top: 14px; font-size: 14px; color: var(--violet-dark); }
   .logo { order: 1; }
   .main-nav { display: none; }
   .has-sticky-cta .mobile-sticky-cta {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     position: fixed;
     left: 0; right: 0; bottom: 0;
     z-index: 150;
@@ -1516,9 +1519,40 @@ details p { margin-top: 14px; font-size: 14px; color: var(--violet-dark); }
   .has-sticky-cta .mobile-sticky-cta.is-hidden { transform: translateY(120%); }
   /* Plutôt qu'une barre pleine largeur (effet "toolbar" plat), un bouton pilule
      centré, plus généreux en hauteur : ça donne un CTA qui flotte et qui
-     donne envie de cliquer, pas une barre d'outils. */
-  .mobile-sticky-cta { text-align: center; }
-  .mobile-sticky-cta .btn { display: inline-flex; width: auto; padding: 15px 36px; box-shadow: 0 8px 18px -8px rgba(46,48,107,0.35); }
+     donne envie de cliquer, pas une barre d'outils. Le texte reste sur une
+     seule ligne (taille réduite + pas de retour à la ligne) plutôt que de
+     déborder sur deux lignes. */
+  .mobile-sticky-cta .btn {
+    flex: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: auto; padding: 18px 20px;
+    font-size: 15px; white-space: nowrap;
+    box-shadow: 0 8px 18px -8px rgba(46,48,107,0.35);
+  }
+  /* La flèche du bouton (utile ailleurs) pointerait droit vers la croix ici :
+     pas la peine, on la masque juste dans ce contexte précis. */
+  .mobile-sticky-cta .btn-arrow { display: none; }
+  .mobile-sticky-cta-close {
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--violet-lilas);
+    background: var(--violet-lilas-light);
+    color: var(--violet-dark);
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .mobile-sticky-cta-close:hover,
+  .mobile-sticky-cta-close:active {
+    background: var(--violet-lilas);
+    border-color: var(--violet-primary);
+  }
+  .mobile-sticky-cta-close svg {
+    width: 16px; height: 16px;
+    fill: none; stroke: currentColor;
+    stroke-width: 2.4; stroke-linecap: round;
+  }
   .has-sticky-cta { padding-bottom: 84px; }
   .mobile-menu {
     position: fixed;

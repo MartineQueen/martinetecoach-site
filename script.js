@@ -114,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const stickyCta = document.querySelector('.mobile-sticky-cta');
   const stickyHideZones = document.querySelectorAll('#offres, .hero-cta');
   if (stickyCta && stickyHideZones.length && 'IntersectionObserver' in window) {
+    let dismissed = sessionStorage.getItem('sticky-cta-dismissed') === 'true';
     const visibleZones = new Set();
     const seenZones = new Set();
     const stickyObserver = new IntersectionObserver((entries) => {
@@ -125,10 +126,50 @@ document.addEventListener('DOMContentLoaded', () => {
           visibleZones.delete(entry.target);
         }
       });
-      const shouldShow = seenZones.size > 0 && visibleZones.size === 0;
+      const shouldShow = !dismissed && seenZones.size > 0 && visibleZones.size === 0;
       stickyCta.classList.toggle('is-hidden', !shouldShow);
     }, { threshold: 0.2 });
     stickyHideZones.forEach((zone) => stickyObserver.observe(zone));
+
+    /* Croix pour fermer : masque le CTA et le laisse fermé pour le reste de
+       la visite (sessionStorage), sans redemander à chaque page tant que
+       l'onglet reste ouvert. */
+    const stickyCloseBtn = stickyCta.querySelector('.mobile-sticky-cta-close');
+    if (stickyCloseBtn) {
+      stickyCloseBtn.addEventListener('click', () => {
+        dismissed = true;
+        sessionStorage.setItem('sticky-cta-dismissed', 'true');
+        stickyCta.classList.add('is-hidden');
+      });
+    }
+  }
+
+  /* -------------------- Header : masqué en scrollant vers le bas --------------------
+     Le header prend de la place à l'écran en permanence sur mobile. On le
+     glisse hors champ dès qu'on scroll vers le bas (au-delà de sa propre
+     hauteur, pour ne pas clignoter tout en haut de page), et il revient dès
+     qu'on scroll vers le haut, même d'un pixel. Écouteur passif + rAF pour
+     rester fluide, indépendant de GSAP comme le menu mobile et le CTA sticky. */
+  const siteHeader = document.querySelector('[data-header]');
+  if (siteHeader) {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    const headerHeight = siteHeader.offsetHeight;
+    const updateHeaderVisibility = () => {
+      const currentY = window.scrollY;
+      if (currentY > lastScrollY && currentY > headerHeight) {
+        siteHeader.classList.add('is-hidden');
+      } else {
+        siteHeader.classList.remove('is-hidden');
+      }
+      lastScrollY = currentY;
+      ticking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateHeaderVisibility);
+    }, { passive: true });
   }
 
   /* -------------------- Formulaire de contact (Netlify Forms, sans rechargement) --------------------
