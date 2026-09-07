@@ -20,10 +20,9 @@ window.addEventListener('message', (e) => {
   }
 });
 
-/* -------------------- Consentement cookies + Google Analytics --------------------
-   GA4 dépose des cookies : rien ne se charge tant que la visiteuse n'a pas
-   cliqué "Accepter". Le choix est mémorisé (localStorage) pour ne plus
-   redemander à chaque visite. */
+/* -------------------- Google Analytics --------------------
+   Bandeau de consentement retiré (choix de Marine, 2026-09-07) : GA4 se
+   charge directement au chargement de la page, sans demander l'accord. */
 const GA_MEASUREMENT_ID = 'G-YCLN8DN1E5';
 
 function loadGoogleAnalytics() {
@@ -56,25 +55,7 @@ document.addEventListener('click', (e) => {
   }
 });
 
-(function initCookieConsent() {
-  const banner = document.getElementById('cookie-banner');
-  if (!banner) return;
-  const choice = localStorage.getItem('cookie-consent');
-  if (choice === 'accepted') { loadGoogleAnalytics(); return; }
-  if (choice === 'refused') return;
-  banner.hidden = false;
-  const acceptBtn = banner.querySelector('[data-cookie-accept]');
-  const refuseBtn = banner.querySelector('[data-cookie-refuse]');
-  acceptBtn.addEventListener('click', () => {
-    localStorage.setItem('cookie-consent', 'accepted');
-    banner.hidden = true;
-    loadGoogleAnalytics();
-  });
-  refuseBtn.addEventListener('click', () => {
-    localStorage.setItem('cookie-consent', 'refused');
-    banner.hidden = true;
-  });
-})();
+loadGoogleAnalytics();
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -125,18 +106,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* -------------------- CTA sticky mobile : masqué près d'un autre CTA --------------------
      Évite d'avoir le CTA sticky ET un autre CTA (hero, cartes offres/interventions)
-     visibles en même temps (redondant). Indépendant de GSAP, comme le menu mobile,
-     pour continuer à marcher même si les animations plantent. */
+     visibles en même temps (redondant). Ne s'affiche qu'une fois qu'on a déjà VU
+     un de ces CTA et qu'on l'a quitté en scrollant : sinon il apparaît à tort dès
+     le chargement, tant que le CTA du hero n'a pas encore atteint le viewport
+     (juste sous le pli sur petit écran). Indépendant de GSAP, comme le menu
+     mobile, pour continuer à marcher même si les animations plantent. */
   const stickyCta = document.querySelector('.mobile-sticky-cta');
   const stickyHideZones = document.querySelectorAll('#offres, .hero-cta');
   if (stickyCta && stickyHideZones.length && 'IntersectionObserver' in window) {
     const visibleZones = new Set();
+    const seenZones = new Set();
     const stickyObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) visibleZones.add(entry.target);
-        else visibleZones.delete(entry.target);
+        if (entry.isIntersecting) {
+          visibleZones.add(entry.target);
+          seenZones.add(entry.target);
+        } else {
+          visibleZones.delete(entry.target);
+        }
       });
-      stickyCta.classList.toggle('is-hidden', visibleZones.size > 0);
+      const shouldShow = seenZones.size > 0 && visibleZones.size === 0;
+      stickyCta.classList.toggle('is-hidden', !shouldShow);
     }, { threshold: 0.2 });
     stickyHideZones.forEach((zone) => stickyObserver.observe(zone));
   }
