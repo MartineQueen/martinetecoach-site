@@ -1660,6 +1660,10 @@ details p { margin-top: 14px; font-size: 14px; color: var(--violet-dark); }
   padding: 24px;
 }
 .contact-alt p { font-weight: 600; color: var(--violet-dark); margin-bottom: 16px; }
+.contact-alt .btn { white-space: nowrap; }
+@media (max-width: 480px) {
+  .contact-alt .btn { font-size: 14px; padding: 10px 16px; }
+}
 
 .contact-form {
   background: var(--white);
