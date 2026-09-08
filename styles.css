@@ -8,7 +8,8 @@
 
 @font-face {
   font-family: 'Gazpacho';
-  src: url('fonts/GazpachoBlack.ttf') format('truetype');
+  src: url('fonts/GazpachoBlack.woff2') format('woff2'),
+       url('fonts/GazpachoBlack.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
