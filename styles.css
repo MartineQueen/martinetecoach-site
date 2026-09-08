@@ -1669,7 +1669,7 @@ details p { margin-top: 14px; font-size: 14px; color: var(--violet-dark); }
 }
 /* Honeypot anti-spam Netlify : masqué visuellement mais présent dans le DOM
    (les bots remplissent souvent les champs cachés en display:none/hidden). */
-.hp-field { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.hp-field { position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden; white-space: nowrap; }
 .form-group { margin-bottom: 20px; }
 .form-group label { display: block; font-weight: 600; font-size: 14px; color: var(--violet-dark); margin-bottom: 6px; }
 .form-group input, .form-group textarea {
