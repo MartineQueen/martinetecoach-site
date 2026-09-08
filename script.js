@@ -421,12 +421,11 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.set(el, { opacity: 1 });
     gsap.from(wordEls, {
       opacity: 0,
-      y: 30,
-      rotate: 3,
-      duration: 0.7,
-      ease: 'power3.out',
-      stagger: 0.05,
-      delay: 0.1,
+      y: 24,
+      duration: 1,
+      ease: 'sine.out',
+      stagger: 0.06,
+      delay: 0.2,
     });
   });
 
