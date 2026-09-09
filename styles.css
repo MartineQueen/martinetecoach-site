@@ -731,7 +731,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
   border-color: var(--violet-primary);
 }
 .offre-card.is-featured { border: 2px solid var(--violet-primary); }
-.offre-header { background: var(--violet-lilas-light); border-radius: 16px; padding: 16px; }
+.offre-header { background: var(--violet-lilas-light); border-radius: 16px; padding: 16px; text-align: center; }
 .offre-name { font-family: var(--font-display); font-size: 22px; color: var(--violet-primary); margin: 0; white-space: nowrap; }
 /* Ruban "Recommandé" détaché du nom de l'offre (avant : côte à côte dans une
    ligne flex, ce qui forçait la carte à s'élargir ou à passer à la ligne dès
@@ -754,6 +754,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 }
 .offre-launch-badge {
   display: inline-flex; align-items: center; gap: 6px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
   margin-top: 12px;
   background: var(--white);
   border: 2px solid var(--lime);
