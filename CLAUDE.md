@@ -27,7 +27,7 @@ Animations au scroll : attributs `data-reveal` / `data-reveal-stagger` (GSAP + S
 - **GA4** (`G-YCLN8DN1E5`) : chargé uniquement après consentement cookie (fonction `loadGoogleAnalytics()` dans `script.js`), conforme RGPD.
 - **Cloudflare Web Analytics** : cookieless, actif sans condition sur les 5 pages (`<script ... beacon.min.js ...>` en fin de `<body>`).
 - **Événement custom `click_book_call`** : se déclenche sur tout clic vers un lien Calendly (délégation d'événement dans `script.js`), envoyé à GA4 seulement si le consentement est donné.
-- **Liens UTM de campagne** : voir `../tracking-liens-campagne.md` (dans le dossier parent) pour les liens trackés par post/canal (`utm_campaign=visibilite-4-semaines`).
+- **Liens UTM de campagne** : voir `../tracking-liens-campagne.md` (dans le dossier parent) pour les liens trackés par post/canal (`utm_campaign=sept2026`).
 
 ## Déploiement
 
