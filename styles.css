@@ -785,6 +785,24 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .offre-inclus { list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--violet-dark); display: flex; flex-direction: column; gap: 10px; }
 .offre-inclus li::before { content: '• '; color: var(--violet-primary); font-weight: 700; }
 .offre-microcopy { font-size: 12px; color: var(--violet-dark); text-align: center; }
+.offre-option-hint {
+  display: inline-flex; align-items: center; gap: 6px;
+  align-self: flex-start;
+  background: var(--violet-lilas-light);
+  border: 1px solid var(--violet-lilas);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12px; font-weight: 700;
+  color: var(--violet-primary);
+  margin-top: -12px;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.offre-option-hint:hover {
+  background: var(--violet-lilas);
+  border-color: var(--violet-primary);
+  transform: translateY(-2px);
+}
+.offre-option-hint a { color: inherit; text-decoration: none; }
 
 .option-tech {
   background: var(--white);
