@@ -753,15 +753,16 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
   box-shadow: 0 6px 14px -2px rgba(47,50,106,0.55);
 }
 .offre-launch-badge {
-  display: inline-flex; align-items: center; gap: 6px;
+  display: inline-flex; align-items: center; gap: 4px;
   flex-wrap: nowrap;
   white-space: nowrap;
   margin-top: 12px;
   background: var(--white);
   border: 2px solid var(--lime);
   color: var(--violet-dark);
-  font-size: 12px; font-weight: 700;
-  padding: 5px 14px 5px 10px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: -0.01em;
+  padding: 5px 12px 5px 8px;
   border-radius: 999px;
   animation: badge-pulse 2.2s ease-in-out infinite;
 }
