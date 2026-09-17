@@ -59,10 +59,24 @@
       <h1 data-reveal>Le carnet de Mar(t)ine</h1>
       <p data-reveal>Visibilité, positionnement, tech sans se ruiner : ce que j'ai vécu, sans filtre.</p>
 
-      <div class="articles-grid">
-        <a href="se-faire-connaitre-sans-linkedin.html" class="article-card" data-reveal-stagger>
+      <div class="blog-filter-bar" data-reveal role="group" aria-label="Filtrer par catégorie">
+        <button type="button" class="blog-filter-btn is-active" data-filter="all">Tous <span>(21)</span></button>
+        <button type="button" class="blog-filter-btn" data-filter="Positionnement">Positionnement <span>(4)</span></button>
+        <button type="button" class="blog-filter-btn" data-filter="MVP & startup">MVP & startup <span>(4)</span></button>
+        <button type="button" class="blog-filter-btn" data-filter="Se lancer">Se lancer <span>(3)</span></button>
+        <button type="button" class="blog-filter-btn" data-filter="Femmes dans la tech">Femmes dans la tech <span>(3)</span></button>
+        <button type="button" class="blog-filter-btn" data-filter="Ma méthode">Ma méthode <span>(2)</span></button>
+        <button type="button" class="blog-filter-btn" data-filter="Mindset">Mindset <span>(1)</span></button>
+        <button type="button" class="blog-filter-btn" data-filter="Entre femmes">Entre femmes <span>(1)</span></button>
+        <button type="button" class="blog-filter-btn" data-filter="Communauté">Communauté <span>(1)</span></button>
+        <button type="button" class="blog-filter-btn" data-filter="Prix & coaching">Prix & coaching <span>(1)</span></button>
+        <button type="button" class="blog-filter-btn" data-filter="Réseaux sociaux">Réseaux sociaux <span>(1)</span></button>
+      </div>
+
+      <div class="articles-grid" data-articles-grid>
+        <a href="se-faire-connaitre-sans-linkedin.html" class="article-card" data-tag="Se lancer" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-linkedin.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 4 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 3 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">Se lancer</span></div>
@@ -72,9 +86,9 @@
           </div>
         </a>
 
-        <a href="no-code-lancer-startup.html" class="article-card" data-reveal-stagger>
+        <a href="no-code-lancer-startup.html" class="article-card" data-tag="MVP & startup" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-nocode.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 4 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 3 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">MVP & startup</span></div>
@@ -84,21 +98,21 @@
           </div>
         </a>
 
-        <a href="comment-savoir-si-idee-startup-est-bonne.html" class="article-card" data-reveal-stagger>
+        <a href="comment-savoir-si-idee-startup-est-bonne.html" class="article-card" data-tag="MVP & startup" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-idee-startup.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 5 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 4 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">MVP & startup</span></div>
-            <h2 class="article-card-title">Comment savoir si ton idée de startup est bonne (spoiler : arrête de te demander ça)</h2>
+            <h2 class="article-card-title">Comment savoir si ton idée de startup est bonne (indice : arrête de te demander ça)</h2>
             <p class="article-card-excerpt">Tu tournes en rond à te demander si ton idée est "la bonne" ? Voici comment le savoir vraiment.</p>
             <span class="article-card-link">Lire l'article <span class="article-arrow">→</span></span>
           </div>
         </a>
 
-        <a href="reconversion-femme-tech.html" class="article-card" data-reveal-stagger>
+        <a href="reconversion-femme-tech.html" class="article-card" data-tag="Femmes dans la tech" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-reconversion.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 5 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 4 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">Femmes dans la tech</span></div>
@@ -108,9 +122,9 @@
           </div>
         </a>
 
-        <a href="comment-avoir-premieres-clientes.html" class="article-card" data-reveal-stagger>
+        <a href="comment-avoir-premieres-clientes.html" class="article-card" data-tag="Se lancer" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-premieres-clientes.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 5 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 3 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">Se lancer</span></div>
@@ -120,9 +134,9 @@
           </div>
         </a>
 
-        <a href="a-quoi-sert-coach-strategique.html" class="article-card" data-reveal-stagger>
+        <a href="a-quoi-sert-coach-strategique.html" class="article-card" data-tag="Ma méthode" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-coach.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 5 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 4 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">Ma méthode</span></div>
@@ -132,9 +146,9 @@
           </div>
         </a>
 
-        <a href="pitcher-son-projet.html" class="article-card" data-reveal-stagger>
+        <a href="pitcher-son-projet.html" class="article-card" data-tag="Positionnement" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-pitch.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 5 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 3 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">Positionnement</span></div>
@@ -144,9 +158,9 @@
           </div>
         </a>
 
-        <a href="syndrome-imposteur-entrepreneuse.html" class="article-card" data-reveal-stagger>
+        <a href="syndrome-imposteur-entrepreneuse.html" class="article-card" data-tag="Mindset" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-imposteure.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 5 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 4 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">Mindset</span></div>
@@ -156,7 +170,7 @@
           </div>
         </a>
 
-        <a href="femme-dans-la-tech.html" class="article-card" data-reveal-stagger>
+        <a href="femme-dans-la-tech.html" class="article-card" data-tag="Femmes dans la tech" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-femme-tech.webp');">
             <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 5 min</span>
           </div>
@@ -168,9 +182,9 @@
           </div>
         </a>
 
-        <a href="construire-communaute-sans-budget-pub.html" class="article-card" data-reveal-stagger>
+        <a href="construire-communaute-sans-budget-pub.html" class="article-card" data-tag="Communauté" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-communaute.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 5 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 2 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">Communauté</span></div>
@@ -180,7 +194,7 @@
           </div>
         </a>
 
-        <a href="mvp-sans-budget.html" class="article-card" data-reveal-stagger>
+        <a href="mvp-sans-budget.html" class="article-card" data-tag="MVP & startup" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-mvp.webp');">
             <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 5 min</span>
           </div>
@@ -192,7 +206,7 @@
           </div>
         </a>
 
-        <a href="startup-positionnement-invisible.html" class="article-card" data-reveal-stagger>
+        <a href="startup-positionnement-invisible.html" class="article-card" data-tag="Positionnement" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-positionnement.webp');">
             <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 5 min</span>
           </div>
@@ -204,7 +218,7 @@
           </div>
         </a>
 
-        <a href="femme-tech-rebeca.html" class="article-card" data-reveal-stagger>
+        <a href="femme-tech-rebeca.html" class="article-card" data-tag="Femmes dans la tech" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-rebeca.webp');">
             <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 5 min</span>
           </div>
@@ -216,9 +230,9 @@
           </div>
         </a>
 
-        <a href="travailler-entre-femmes.html" class="article-card" data-reveal-stagger>
+        <a href="travailler-entre-femmes.html" class="article-card" data-tag="Entre femmes" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-femmes-entre-elles.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 4 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 2 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">Entre femmes</span></div>
@@ -228,9 +242,9 @@
           </div>
         </a>
 
-        <a href="trop-idees-zero-priorite.html" class="article-card" data-reveal-stagger>
+        <a href="trop-idees-zero-priorite.html" class="article-card" data-tag="Positionnement" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-idees.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 4 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 2 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">Positionnement</span></div>
@@ -240,9 +254,9 @@
           </div>
         </a>
 
-        <a href="se-lancer-sans-reseau.html" class="article-card" data-reveal-stagger>
+        <a href="se-lancer-sans-reseau.html" class="article-card" data-tag="MVP & startup" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-solo.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 5 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 2 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">MVP & startup</span></div>
@@ -252,9 +266,9 @@
           </div>
         </a>
 
-        <a href="combien-coute-coach-strategique.html" class="article-card" data-reveal-stagger>
+        <a href="combien-coute-coach-strategique.html" class="article-card" data-tag="Prix & coaching" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-prix.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 4 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 2 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">Prix & coaching</span></div>
@@ -264,9 +278,9 @@
           </div>
         </a>
 
-        <a href="instagram-30000-sans-montrer-visage.html" class="article-card" data-reveal-stagger>
+        <a href="instagram-30000-sans-montrer-visage.html" class="article-card" data-tag="Réseaux sociaux" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-instagram.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 5 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 2 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">Réseaux sociaux</span></div>
@@ -276,9 +290,9 @@
           </div>
         </a>
 
-        <a href="pourquoi-3-clientes-par-mois.html" class="article-card" data-reveal-stagger>
+        <a href="pourquoi-3-clientes-par-mois.html" class="article-card" data-tag="Ma méthode" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-3clientes.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 3 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 2 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">Ma méthode</span></div>
@@ -288,9 +302,9 @@
           </div>
         </a>
 
-        <a href="incubateur-ou-coach-independant.html" class="article-card" data-reveal-stagger>
+        <a href="incubateur-ou-coach-independant.html" class="article-card" data-tag="Se lancer" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-incubateur.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 5 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 2 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">Se lancer</span></div>
@@ -300,9 +314,9 @@
           </div>
         </a>
 
-        <a href="freelance-vs-entrepreneuse-branding.html" class="article-card" data-reveal-stagger>
+        <a href="freelance-vs-entrepreneuse-branding.html" class="article-card" data-tag="Positionnement" data-reveal-stagger>
           <div class="article-card-cover" style="background-image: url('images/article-freelance.webp');">
-            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 4 min</span>
+            <span class="article-card-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6 L12 12 L16 14"/></svg> 2 min</span>
           </div>
           <div class="article-card-body">
             <div class="article-card-meta"><span class="article-card-tag">Positionnement</span></div>

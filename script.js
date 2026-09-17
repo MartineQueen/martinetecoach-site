@@ -145,6 +145,78 @@ if ('IntersectionObserver' in window) {
   });
 }
 
+/* -------------------- Filtre par catégorie sur le blog --------------------
+   Filtrage 100% côté client : clic sur une pill, on affiche/masque les
+   cards du bon data-tag, pas de rechargement de page. Envoie aussi un
+   événement GA4 pour voir quelles catégories intéressent le plus. */
+document.addEventListener('DOMContentLoaded', () => {
+  const filterBar = document.querySelector('.blog-filter-bar');
+  const grid = document.querySelector('[data-articles-grid]');
+  if (!filterBar || !grid) return;
+  const cards = grid.querySelectorAll('.article-card');
+  const buttons = filterBar.querySelectorAll('.blog-filter-btn');
+
+  filterBar.addEventListener('click', (e) => {
+    const btn = e.target.closest('.blog-filter-btn');
+    if (!btn) return;
+    const filter = btn.dataset.filter;
+    buttons.forEach((b) => b.classList.toggle('is-active', b === btn));
+    cards.forEach((card) => {
+      const match = filter === 'all' || card.dataset.tag === filter;
+      card.classList.toggle('is-hidden', !match);
+    });
+    if (typeof gtag === 'function') {
+      gtag('event', 'blog_filter_click', { filter_value: filter });
+    }
+  });
+});
+
+/* -------------------- Barre sticky mobile "réserver un appel" --------------------
+   Même logique que sur Les Martines : une barre fixée en bas, qui apparaît
+   après un peu de scroll (pas dès le chargement), avec un bouton pour fermer
+   qui mémorise le choix pour le reste de la session. Injectée en JS pour ne
+   pas avoir à dupliquer le HTML sur toutes les pages. */
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.matchMedia('(min-width: 701px)').matches) return;
+  if (document.querySelector('.sticky-mobile-cta')) return;
+  let dismissed = false;
+  try { dismissed = sessionStorage.getItem('stickyCtaDismissed') === '1'; } catch (err) { /* silencieux si stockage bloqué */ }
+  if (dismissed) return;
+
+  const bar = document.createElement('div');
+  bar.className = 'sticky-mobile-cta';
+  bar.innerHTML = `
+    <img class="sticky-mobile-cta-avatar" src="images/hero-photo-mask.webp" alt="" loading="lazy">
+    <div class="sticky-mobile-cta-text">
+      <a href="https://calendly.com/hellomartine/30min?primary_color=6066d8" class="sticky-mobile-cta-link">Bloque ton appel gratuit →</a>
+      <span class="sticky-mobile-cta-subtext">30 min · sans engagement</span>
+    </div>
+    <button type="button" class="sticky-mobile-cta-close" aria-label="Fermer">&times;</button>
+  `;
+  document.body.appendChild(bar);
+
+  const link = bar.querySelector('.sticky-mobile-cta-link');
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    Calendly.initPopupWidget({ url: 'https://calendly.com/hellomartine/30min?primary_color=6066d8' });
+  });
+
+  bar.querySelector('.sticky-mobile-cta-close').addEventListener('click', () => {
+    bar.classList.remove('is-visible', 'is-prominent');
+    try { sessionStorage.setItem('stickyCtaDismissed', '1'); } catch (err) { /* silencieux */ }
+  });
+
+  /* Version imposante (avatar + sous-texte + dégradé) une fois 65% de la
+     page défilée : on pousse plus fort une fois que la personne a lu la
+     majorité du contenu, pas seulement tout à la fin. */
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 150) bar.classList.add('is-visible');
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+    bar.classList.toggle('is-prominent', progress > 0.6);
+  }, { passive: true });
+});
+
 loadGoogleAnalytics();
 
 document.addEventListener('DOMContentLoaded', () => {
