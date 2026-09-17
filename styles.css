@@ -1999,7 +1999,9 @@ details p { margin-top: 14px; font-size: 14px; color: var(--violet-dark); }
 .article-hero .article-card-tag { background: rgba(255,255,255,0.9); }
 .article-hero .article-card-date { color: var(--white); opacity: 0.85; }
 .article-hero h1 { color: var(--white); font-size: clamp(1.7rem, 3.6vw, 2.4rem); line-height: 1.2; margin-bottom: 16px; }
-.article-byline { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: var(--white); opacity: 0.9; }
+.article-byline { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: var(--white); text-decoration: none; opacity: 0.9; transition: opacity 0.2s ease; }
+.article-byline:hover { opacity: 1; }
+.article-byline:hover .article-byline-avatar { border-color: rgba(255,255,255,0.9); }
 .article-byline-avatar {
   width: 28px; height: 28px; border-radius: 50%;
   object-fit: cover;
