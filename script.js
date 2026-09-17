@@ -147,8 +147,11 @@ if ('IntersectionObserver' in window) {
 
 /* -------------------- Filtre par catégorie sur le blog --------------------
    Filtrage 100% côté client : clic sur une pill, on affiche/masque les
-   cards du bon data-tag, pas de rechargement de page. Envoie aussi un
-   événement GA4 pour voir quelles catégories intéressent le plus. */
+   cards du bon data-tag, pas de rechargement de page. Une catégorie est
+   aussi accessible par lien direct via blog.html?categorie=XXX (utilisé
+   par le fil d'Ariane des articles) : on applique le filtre correspondant
+   dès le chargement. Envoie un événement GA4 pour voir quelles catégories
+   intéressent le plus. */
 document.addEventListener('DOMContentLoaded', () => {
   const filterBar = document.querySelector('.blog-filter-bar');
   const grid = document.querySelector('[data-articles-grid]');
@@ -156,19 +159,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const cards = grid.querySelectorAll('.article-card');
   const buttons = filterBar.querySelectorAll('.blog-filter-btn');
 
-  filterBar.addEventListener('click', (e) => {
-    const btn = e.target.closest('.blog-filter-btn');
-    if (!btn) return;
-    const filter = btn.dataset.filter;
+  const applyFilter = (filter, btn) => {
     buttons.forEach((b) => b.classList.toggle('is-active', b === btn));
     cards.forEach((card) => {
       const match = filter === 'all' || card.dataset.tag === filter;
       card.classList.toggle('is-hidden', !match);
     });
+  };
+
+  filterBar.addEventListener('click', (e) => {
+    const btn = e.target.closest('.blog-filter-btn');
+    if (!btn) return;
+    const filter = btn.dataset.filter;
+    applyFilter(filter, btn);
     if (typeof gtag === 'function') {
       gtag('event', 'blog_filter_click', { filter_value: filter });
     }
   });
+
+  const requested = new URLSearchParams(window.location.search).get('categorie');
+  if (requested) {
+    const match = [...buttons].find((b) => b.dataset.filter === requested);
+    if (match) {
+      applyFilter(requested, match);
+      match.scrollIntoView({ block: 'center', inline: 'center' });
+    }
+  }
 });
 
 /* -------------------- Barre sticky mobile "réserver un appel" --------------------
@@ -319,7 +335,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const headerHeight = siteHeader.offsetHeight;
     const updateHeaderVisibility = () => {
       const currentY = window.scrollY;
-      if (currentY > lastScrollY && currentY > headerHeight) {
+      const isMobile = window.matchMedia('(max-width: 700px)').matches;
+      if (isMobile && currentY > lastScrollY && currentY > headerHeight) {
         siteHeader.classList.add('is-hidden');
       } else {
         siteHeader.classList.remove('is-hidden');
