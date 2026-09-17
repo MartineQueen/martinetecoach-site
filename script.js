@@ -55,6 +55,96 @@ document.addEventListener('click', (e) => {
   }
 });
 
+/* -------------------- Tracking clics sortants --------------------
+   Un seul listener délégué : dès qu'on clique un lien qui sort du site
+   (Les Martines, Rebeca, LinkedIn, Instagram...), on envoie un événement
+   GA4 avec l'URL de destination et le texte du lien. Permet de voir dans
+   GA4 quels liens externes captent le plus de clics, page par page. */
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('a[href^="http"]');
+  if (!link) return;
+  if (link.hostname === window.location.hostname) return;
+  if (link.href.indexOf('calendly.com') !== -1) return;
+  if (typeof gtag === 'function') {
+    gtag('event', 'click_outbound', {
+      link_url: link.href,
+      link_text: link.textContent.trim(),
+      page_path: window.location.pathname,
+    });
+  }
+});
+
+/* -------------------- Tracking clics "à lire aussi" --------------------
+   Clic sur une card de suggestion d'article : utile pour voir quels
+   articles renvoient le mieux vers d'autres articles du blog, et lesquels
+   sont les plus cliqués en tant que suggestion. */
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('.article-related-card');
+  if (!link) return;
+  if (typeof gtag === 'function') {
+    const titleEl = link.querySelector('.article-related-title');
+    gtag('event', 'article_related_click', {
+      link_url: link.getAttribute('href'),
+      link_text: titleEl ? titleEl.textContent.trim() : '',
+      from_page: window.location.pathname,
+    });
+  }
+});
+
+/* -------------------- Tracking progression de lecture d'un article --------------------
+   Deux signaux, chacun envoyé une seule fois par visite :
+   - article_scroll_50 quand on a défilé la moitié du corps de l'article
+   - article_read_complete quand le bloc "Tous les articles" en bas de page
+     devient visible (bon proxy de fin de lecture)
+   Permet de distinguer les gens qui commencent à lire de ceux qui vont
+   vraiment au bout, article par article. */
+if ('IntersectionObserver' in window) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const content = document.querySelector('.article-content');
+    const articleEnd = document.querySelector('.article-back');
+    if (!content || !articleEnd) return;
+
+    const sendOnce = (() => {
+      const sent = {};
+      return (name) => {
+        if (sent[name] || typeof gtag !== 'function') return;
+        sent[name] = true;
+        gtag('event', name, {
+          page_path: window.location.pathname,
+          page_title: document.title,
+        });
+      };
+    })();
+
+    const midMarker = document.createElement('span');
+    midMarker.setAttribute('aria-hidden', 'true');
+    midMarker.style.position = 'absolute';
+    content.style.position = content.style.position || 'relative';
+    midMarker.style.top = '50%';
+    content.appendChild(midMarker);
+
+    const midObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          sendOnce('article_scroll_50');
+          midObserver.disconnect();
+        }
+      });
+    });
+    midObserver.observe(midMarker);
+
+    const endObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          sendOnce('article_read_complete');
+          endObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+    endObserver.observe(articleEnd);
+  });
+}
+
 loadGoogleAnalytics();
 
 document.addEventListener('DOMContentLoaded', () => {
