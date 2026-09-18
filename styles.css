@@ -1961,7 +1961,11 @@ details p { margin-top: 14px; font-size: 14px; color: var(--violet-dark); }
   font-weight: 700;
   border-radius: 999px;
   padding: 4px 12px;
+  text-decoration: none;
+  display: inline-block;
+  transition: opacity 0.2s ease;
 }
+a.article-card-tag:hover { opacity: 0.75; }
 .article-card-date { color: var(--violet-dark); opacity: 0.6; }
 .article-card-title { font-family: var(--font-display); font-size: 22px; line-height: 1.2; color: var(--violet-dark); margin: 0; }
 .article-card-excerpt { font-size: 14px; line-height: 1.5; color: var(--violet-dark); opacity: 0.85; margin: 0; flex-grow: 1; }
