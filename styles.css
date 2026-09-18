@@ -172,6 +172,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .header-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
 .logo { font-family: var(--font-display); font-size: 22px; color: var(--violet-dark); transition: font-size 0.25s ease; }
 .logo .logo-accent { color: var(--violet-primary); }
+.title-accent { color: var(--violet-primary); }
 .main-nav { display: flex; gap: 32px; align-items: center; }
 .nav-link { font-weight: 500; font-size: 16px; color: var(--violet-dark); transition: color 0.2s ease; }
 .nav-link:hover { color: var(--violet-primary); }
