@@ -2028,6 +2028,43 @@ details p { margin-top: 14px; font-size: 14px; color: var(--violet-dark); }
   font-style: italic;
   color: var(--violet-dark);
 }
+.article-share {
+  max-width: 680px; margin: 48px auto 0;
+  padding: 24px 28px;
+  border-radius: var(--radius-card);
+  background: rgba(255, 238, 226, 0.55);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  border: 1px solid rgba(255, 238, 226, 0.8);
+  box-shadow: 0 16px 32px -12px rgba(46,48,107,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+}
+.article-share-label { font-family: var(--font-sans); font-size: 15px; font-weight: 700; color: var(--violet-dark); }
+.article-share-buttons { display: flex; align-items: center; gap: 10px; }
+.article-share-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--white); color: var(--violet-primary);
+  box-shadow: 0 2px 6px rgba(46,48,107,0.1);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  border: none; cursor: pointer; position: relative;
+}
+.article-share-btn:hover {
+  background: var(--gradient-cta); color: var(--white);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 18px -4px rgba(96,102,216,0.4);
+}
+@media (max-width: 480px) {
+  .article-share { padding: 20px; gap: 16px; }
+}
+.article-share-btn-copied::after {
+  content: "Lien copié !";
+  position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: var(--violet-dark); color: var(--white);
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+  padding: 5px 10px; border-radius: 999px;
+  pointer-events: none;
+}
 .article-cta {
   max-width: 700px; margin: 56px auto 0;
   background: var(--violet-lilas-light);

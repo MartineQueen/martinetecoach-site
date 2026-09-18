@@ -187,6 +187,42 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+/* -------------------- Partage d'article --------------------
+   Bouton "copier le lien" (clipboard) + tracking GA4 de chaque
+   méthode de partage utilisée (article_share, share_method). */
+document.addEventListener('DOMContentLoaded', () => {
+  const shareBar = document.querySelector('.article-share');
+  if (!shareBar) return;
+
+  shareBar.addEventListener('click', (e) => {
+    const link = e.target.closest('a.article-share-btn');
+    if (link && typeof gtag === 'function') {
+      gtag('event', 'article_share', { share_method: link.dataset.shareMethod });
+    }
+
+    const copyBtn = e.target.closest('button[data-copy-link]');
+    if (!copyBtn) return;
+    const url = copyBtn.dataset.copyLink;
+    const markCopied = () => {
+      copyBtn.classList.add('article-share-btn-copied');
+      setTimeout(() => copyBtn.classList.remove('article-share-btn-copied'), 1800);
+      if (typeof gtag === 'function') {
+        gtag('event', 'article_share', { share_method: 'copy_link' });
+      }
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(markCopied).catch(() => {});
+    } else {
+      const temp = document.createElement('textarea');
+      temp.value = url;
+      document.body.appendChild(temp);
+      temp.select();
+      try { document.execCommand('copy'); markCopied(); } catch (err) { /* silencieux */ }
+      document.body.removeChild(temp);
+    }
+  });
+});
+
 /* -------------------- Barre sticky mobile "réserver un appel" --------------------
    Même logique que sur Les Martines : une barre fixée en bas, qui apparaît
    après un peu de scroll (pas dès le chargement), avec un bouton pour fermer
