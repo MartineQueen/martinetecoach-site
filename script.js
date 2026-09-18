@@ -170,10 +170,39 @@ document.addEventListener('DOMContentLoaded', () => {
   filterBar.addEventListener('click', (e) => {
     const btn = e.target.closest('.blog-filter-btn');
     if (!btn) return;
+    e.preventDefault();
     const filter = btn.dataset.filter;
     applyFilter(filter, btn);
+    const newUrl = filter === 'all' ? 'blog.html' : `blog.html?categorie=${encodeURIComponent(filter)}`;
+    history.pushState({ filter }, '', newUrl);
     if (typeof gtag === 'function') {
       gtag('event', 'blog_filter_click', { filter_value: filter });
+    }
+  });
+
+  window.addEventListener('popstate', () => {
+    const current = new URLSearchParams(window.location.search).get('categorie') || 'all';
+    const match = [...buttons].find((b) => b.dataset.filter === current);
+    if (match) applyFilter(current, match);
+  });
+
+  /* La pastille catégorie de chaque carte doit filtrer la grille au clic,
+     sans suivre le lien de la carte qui l'englobe (toute la carte est un
+     <a> vers l'article, donc on intercepte avant que le navigateur suive
+     ce lien parent). */
+  grid.addEventListener('click', (e) => {
+    const tag = e.target.closest('.article-card-tag[data-category-link]');
+    if (!tag) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const filter = tag.dataset.categoryLink;
+    const match = [...buttons].find((b) => b.dataset.filter === filter);
+    if (!match) return;
+    applyFilter(filter, match);
+    history.pushState({ filter }, '', `blog.html?categorie=${encodeURIComponent(filter)}`);
+    filterBar.scrollIntoView({ block: 'center' });
+    if (typeof gtag === 'function') {
+      gtag('event', 'blog_filter_click', { filter_value: filter, source: 'card_tag' });
     }
   });
 

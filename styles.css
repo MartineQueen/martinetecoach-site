@@ -1966,6 +1966,8 @@ details p { margin-top: 14px; font-size: 14px; color: var(--violet-dark); }
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 a.article-card-tag:hover { background: var(--violet-primary); color: var(--white); transform: translateY(-1px); }
+.article-card-tag[data-category-link] { cursor: pointer; position: relative; z-index: 2; }
+.article-card-tag[data-category-link]:hover { background: var(--violet-primary); color: var(--white); transform: translateY(-1px); }
 .article-card-date { color: var(--violet-dark); opacity: 0.6; }
 .article-card-title { font-family: var(--font-display); font-size: 22px; line-height: 1.2; color: var(--violet-dark); margin: 0; }
 .article-card-excerpt { font-size: 14px; line-height: 1.5; color: var(--violet-dark); opacity: 0.85; margin: 0; flex-grow: 1; }
